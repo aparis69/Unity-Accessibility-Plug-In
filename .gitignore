@@ -1,0 +1,5 @@
+*.unity
+*.unity.meta
+*.dll
+UnityVS.meta
+UnityVS/
