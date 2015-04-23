@@ -62,10 +62,6 @@ public class KeyboardTracker : MonoBehaviour
 
     void OnDestroy()
     {
-        Debug.Log(logger);
-        foreach(KeyCode KC in _KCList)
-        {
-            Debug.Log("Key: " + KC.ToString() + " Count: " + _KCNum[_KCList.IndexOf(KC)]);
-        }
+        DataStorage.StoreKeyboardInput(_KCList, _KCNum);
     }
 }
