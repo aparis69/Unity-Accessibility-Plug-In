@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class KeyboardTracker : MonoBehaviour 
 {
-
     static private KeyCode[] validKeyCodes;
     private string logger;
     private List<KeyCode> _KCList;
