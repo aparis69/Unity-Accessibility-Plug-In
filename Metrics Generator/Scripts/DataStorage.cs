@@ -26,7 +26,48 @@ public class DataStorage
         System.IO.File.WriteAllLines(@"H:\Game Analytics\Data\Keyboard Inputs\Keyboard" + i.ToString() + ".txt", keyboardInputStrings.ToArray());
     }
 
-    public static void StoreMousePosition(int[][] mousePositionArray)
+    public static void StoreMousePositionFromArray(float[][] mousePositionArray)
+    {
+        float? maxVal = null; // nullable so this works even if you have all super-low negatives
+        for (int i = 0; i < mousePositionArray.Length; i++)
+        {
+            for (int j = 0; j < mousePositionArray[i].Length; j++)
+            {
+                float thisNum = mousePositionArray[i][j];
+                if (!maxVal.HasValue || thisNum > maxVal.Value)
+                {
+                    maxVal = thisNum;
+                }
+            }
+        }
+
+        // Create the texture
+        Texture2D tex = new Texture2D(Screen.width, Screen.height);
+        for (int i = 0 ; i < Screen.width ; i++)
+            for (int j = 0; j < Screen.height; j++)
+            {
+                if (mousePositionArray[i][j] == 0f)
+                    tex.SetPixel(i, j, new Color(1f, 1f, 1f));
+                else
+                    tex.SetPixel(i, j, new Color(1f - mousePositionArray[i][j] / maxVal.Value, 0f, 0f));
+            }
+
+        byte[] bytes = tex.EncodeToPNG();
+
+        // Determine a new name for the future file
+        int a = 0;
+        do
+        {
+            if (!System.IO.File.Exists(@"H:\Game Analytics\Data\Mouse Positions\MousePositions" + a.ToString() + ".png"))
+                break;
+            a++;
+        } while (true);
+
+        // Saving the data as a png file
+        System.IO.File.WriteAllBytes(@"H:\Game Analytics\Data\Mouse Positions\MousePositions" + a.ToString() + ".png", bytes);
+    }
+
+    public static void StoreMousePositionFromList()
     {
 
     }

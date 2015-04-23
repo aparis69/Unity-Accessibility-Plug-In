@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 public class MouseTracker : MonoBehaviour 
 {
-    private int[][] mousePositionArray;
+    private float[][] mousePositionArray;
     private List<float> mouseMovementsList;
 
 	void Start () 
     {
-        mousePositionArray = new int[Screen.width][];
+        mousePositionArray = new float[Screen.width][];
         for (int i = 0; i < Screen.width; i++)
-            mousePositionArray[i] = new int[Screen.height];
+            mousePositionArray[i] = new float[Screen.height];
 
         for (int i = 0; i < Screen.width; i++)
             for (int j = 0; j < Screen.height; j++)
@@ -29,17 +29,17 @@ public class MouseTracker : MonoBehaviour
         // Mouse Position Track
         if(Screen.width - (int)Input.mousePosition.x > 0 && Screen.width - (int)Input.mousePosition.x < Screen.width)
             if (Screen.height - (int)Input.mousePosition.y > 0 && Screen.height - (int)Input.mousePosition.y < Screen.height)
-                mousePositionArray[Screen.width - (int)Input.mousePosition.x][Screen.height - (int)Input.mousePosition.y]++;
-	}
+                mousePositionArray[Screen.width - (int)Input.mousePosition.x][Screen.height - (int)Input.mousePosition.y] += 0.1f;
+    }
 
     void OnDestroy()
     {
         // Store the data retreived during the game
         DataStorage.StoreMouseMovements(mouseMovementsList);
-        DataStorage.StoreMousePosition(mousePositionArray);
+        DataStorage.StoreMousePositionFromArray(mousePositionArray);
     }
 
-    public int[][] GetMousePositionArray()
+    public float[][] GetMousePositionArray()
     {
         return mousePositionArray;
     }
