@@ -37,8 +37,8 @@ public class MouseTracker : MonoBehaviour
     void OnDestroy()
     {
         // Store the data retreived during the game
-        DataStorage.StoreMouseMovements(mouseMovementsList, calibrationMode);
-        DataStorage.StoreMousePositionFromArray(mousePositionArray, calibrationMode);
+        CalibrationDataStorage.StoreMouseMovements(mouseMovementsList, calibrationMode);
+        CalibrationDataStorage.StoreMousePositionFromArray(mousePositionArray, calibrationMode);
     }
 
     public float[][] GetMousePositionArray()

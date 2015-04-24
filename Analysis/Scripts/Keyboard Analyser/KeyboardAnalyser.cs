@@ -7,7 +7,7 @@ public class KeyboardAnalyser : MonoBehaviour
     // Data retreived from the current player
     private List<KeyInput> keysInput;
 
-    // Data retreived from the calibration files
+    // Data retreived from the calibration files in CalibrationDataRead
     private List<KeyInput> averageKeyInputValues;
 
     // Other variables
@@ -15,7 +15,7 @@ public class KeyboardAnalyser : MonoBehaviour
 
 	void Start () 
     {
-        averageKeyInputValues = CalibrationData.GetKeyboardData();
+        averageKeyInputValues = CalibrationDataRead.GetKeyboardData();
         canAnalyse = false;
 	}
 		
@@ -29,7 +29,12 @@ public class KeyboardAnalyser : MonoBehaviour
 
     private void CompareData()
     {
-
+        for (int i = 0 ; i < keysInput.Count ; i++)
+        {
+            // Must compare every similar key input in keysInput and averageKeyInputValues and decide if the player has a problem or not :
+            // -the player is not using the right keys
+            // -the player is double striking to much
+        }
     }
 
     public void SetPlayerKeyboardData(List<KeyInput> playerKeysInput)

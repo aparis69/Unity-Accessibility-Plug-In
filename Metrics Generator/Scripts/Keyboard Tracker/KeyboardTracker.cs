@@ -75,7 +75,7 @@ public class KeyboardTracker : MonoBehaviour
                 // if calibration mode not activated, analyse the current player data
                 if (calibrationMode)
                 {
-                    DataStorage.StoreKeyboardInput(keysInput, calibrationMode);
+                    CalibrationDataStorage.StoreKeyboardInput(keysInput, calibrationMode);
                 }
                 else
                 {
