@@ -4,29 +4,29 @@ using System.Collections.Generic;
 
 public class DataStorage
 {
-    public static void StoreKeyboardInput(List<KeyCode> KCList, List<int> KCNum)
+    public static void StoreKeyboardInput(List<KeyInput> keysInput, bool calibrationMode)
     {
-        // Format the content
         List<string> keyboardInputStrings = new List<string>();
-        foreach(KeyCode KC in KCList)
-            keyboardInputStrings.Add(KC.ToString() + "," + KCNum[KCList.IndexOf(KC)]);
+        foreach (KeyInput KC in keysInput)
+            keyboardInputStrings.Add(KC.GetKeyCode().ToString() + "," + KC.GetHitCount().ToString() + "," + KC.GetDoubleStrikingCount().ToString());
 
-        
         // Determine a new name for the future file
         int i = 0;
         do
         {
-            if (!System.IO.File.Exists(@"H:\Game Analytics\Data\Keyboard Inputs\Keyboard" + i.ToString() + ".txt"))
+            if (!System.IO.File.Exists(@"H:\Game Analytics\Data\Calibration\Keyboard Inputs\Keyboard" + i.ToString() + ".txt"))
                 break;
             i++;
         } while (true);
 
-
         // Create the file
-        System.IO.File.WriteAllLines(@"H:\Game Analytics\Data\Keyboard Inputs\Keyboard" + i.ToString() + ".txt", keyboardInputStrings.ToArray());
+        if(calibrationMode)
+            System.IO.File.WriteAllLines(@"H:\Game Analytics\Data\Calibration\Keyboard Inputs\Keyboard" + i.ToString() + ".txt", keyboardInputStrings.ToArray());
+        else
+            System.IO.File.WriteAllLines(@"H:\Game Analytics\Data\Analysis\Keyboard Inputs\Keyboard" + i.ToString() + ".txt", keyboardInputStrings.ToArray());
     }
 
-    public static void StoreMousePositionFromArray(float[][] mousePositionArray)
+    public static void StoreMousePositionFromArray(float[][] mousePositionArray, bool calibrationMode)
     {
         float? maxVal = null; // nullable so this works even if you have all super-low negatives
         for (int i = 0; i < mousePositionArray.Length; i++)
@@ -64,7 +64,7 @@ public class DataStorage
         } while (true);
 
         // Saving the data as a png file
-        System.IO.File.WriteAllBytes(@"H:\Game Analytics\Data\Mouse Positions\MousePositions" + a.ToString() + ".png", bytes);
+        //System.IO.File.WriteAllBytes(@"H:\Game Analytics\Data\Mouse Positions\MousePositions" + a.ToString() + ".png", bytes);
     }
 
     public static void StoreMousePositionFromList()
@@ -72,7 +72,7 @@ public class DataStorage
 
     }
 
-    public static void StoreMouseMovements(List<float> mouseMovements)
+    public static void StoreMouseMovements(List<float> mouseMovements, bool calibrationMode)
     {
         // Format the content
         List<string> keyboardInputStrings = new List<string>();
@@ -95,6 +95,6 @@ public class DataStorage
 
 
         // Create the file
-        System.IO.File.WriteAllLines(@"H:\Game Analytics\Data\Mouse Movements\MouseMovements" + i.ToString() + ".txt", keyboardInputStrings.ToArray());
+        //System.IO.File.WriteAllLines(@"H:\Game Analytics\Data\Mouse Movements\MouseMovements" + i.ToString() + ".txt", keyboardInputStrings.ToArray());
     }
 }

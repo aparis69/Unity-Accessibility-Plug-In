@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class MouseTracker : MonoBehaviour 
 {
+    public bool calibrationMode;
+
     private float[][] mousePositionArray;
     private List<float> mouseMovementsList;
 
@@ -35,8 +37,8 @@ public class MouseTracker : MonoBehaviour
     void OnDestroy()
     {
         // Store the data retreived during the game
-        DataStorage.StoreMouseMovements(mouseMovementsList);
-        DataStorage.StoreMousePositionFromArray(mousePositionArray);
+        DataStorage.StoreMouseMovements(mouseMovementsList, calibrationMode);
+        DataStorage.StoreMousePositionFromArray(mousePositionArray, calibrationMode);
     }
 
     public float[][] GetMousePositionArray()
