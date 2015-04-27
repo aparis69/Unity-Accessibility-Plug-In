@@ -9,6 +9,8 @@ public class MouseTracker : MonoBehaviour
 
     private float[][] mousePositionArray;
     private List<float> mouseMovementsList;
+    private List<Vector2> mousePointerPosition;   
+
 
 	void Start () 
     {
@@ -21,6 +23,9 @@ public class MouseTracker : MonoBehaviour
                 mousePositionArray[i][j] = 0;
 
         mouseMovementsList = new List<float>();
+
+        mousePointerPosition = new List<Vector2>();
+        
 	}
 	
 	void Update () 
@@ -29,16 +34,21 @@ public class MouseTracker : MonoBehaviour
         mouseMovementsList.Add((Mathf.Abs(Input.GetAxis("Mouse X")) + Mathf.Abs(Input.GetAxis("Mouse Y"))) / 2f * 50); 
 
         // Mouse Position Track
-        if(Screen.width - (int)Input.mousePosition.x > 0 && Screen.width - (int)Input.mousePosition.x < Screen.width)
-            if (Screen.height - (int)Input.mousePosition.y > 0 && Screen.height - (int)Input.mousePosition.y < Screen.height)
-                mousePositionArray[Screen.width - (int)Input.mousePosition.x][Screen.height - (int)Input.mousePosition.y] += 0.1f;
+        if (Screen.width - (int)Input.mousePosition.x > 0 && Screen.width - (int)Input.mousePosition.x < Screen.width) //if mouse is in the screen
+        {
+            if (Screen.height - (int)Input.mousePosition.y > 0 && Screen.height - (int)Input.mousePosition.y < Screen.height) //if mouse is in the screen
+            {
+                mousePositionArray[Screen.width - (int)Input.mousePosition.x][Screen.height - (int)Input.mousePosition.y] += 0.1f; //store position in an array
+                mousePointerPosition.Add(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+            }
+        }
     }
 
     void OnDestroy()
     {
         // Store the data retreived during the game
         CalibrationDataStorage.StoreMouseMovements(mouseMovementsList, calibrationMode);
-        CalibrationDataStorage.StoreMousePositionFromArray(mousePositionArray, calibrationMode);
+        CalibrationDataStorage.StoreMousePositionFromArray(mousePositionArray, calibrationMode);   
     }
 
     public float[][] GetMousePositionArray()
