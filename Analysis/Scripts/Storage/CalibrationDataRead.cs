@@ -84,9 +84,9 @@ public class CalibrationDataRead
         return averageKeyInputValue;
     }
 
-    public static void GetMousePositionData()
+    public static List<Vector2> GetMousePositionData()
     {
-
+        return null;
     }
 
     public static void GetMouseMovementsData()

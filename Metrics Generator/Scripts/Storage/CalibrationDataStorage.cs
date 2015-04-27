@@ -67,9 +67,26 @@ public class CalibrationDataStorage
         //System.IO.File.WriteAllBytes(@"H:\Game Analytics\Data\Mouse Positions\MousePositions" + a.ToString() + ".png", bytes);
     }
 
-    public static void StoreMousePositionFromList()
+    public static void StoreMousePositionFromList(List<Vector2> mousePositions, bool calibrationMode)
     {
+        List<string> mousePositionsStrings = new List<string>();
+        foreach (Vector2 vec in mousePositions)
+            mousePositionsStrings.Add(vec.x + "," + vec.y);
 
+        // Determine a new name for the future file
+        int i = 0;
+        do
+        {
+            if (!System.IO.File.Exists(@"H:\Game Analytics\Data\Calibration\Mouse Positions\MousePositions" + i.ToString() + ".txt"))
+                break;
+            i++;
+        } while (true);
+
+        // Create the file
+        if (calibrationMode)
+            System.IO.File.WriteAllLines(@"H:\Game Analytics\Data\Calibration\Keyboard Inputs\Keyboard" + i.ToString() + ".txt", mousePositionsStrings.ToArray());
+        else
+            System.IO.File.WriteAllLines(@"H:\Game Analytics\Data\Analysis\Keyboard Inputs\Keyboard" + i.ToString() + ".txt", mousePositionsStrings.ToArray());
     }
 
     public static void StoreMouseMovements(List<float> mouseMovements, bool calibrationMode)
