@@ -83,8 +83,8 @@ public class MouseTracker : MonoBehaviour
                 }
                 else
                 {
-                    //analyser.CanAnalyse(true);
-                    //analyser.SetPlayerKeyboardData(keysInput);
+                    analyser.CanAnalyse(true);
+                    analyser.SetMousePositionFromPlayer(mousePointerPosition);
                 }
             }
 
