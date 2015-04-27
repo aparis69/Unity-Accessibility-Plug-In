@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class MouseAnalyser : MonoBehaviour
 {
     // Mouse Position analysing
-    // Data retreived from calibration
-    private List<Vector2> mPositionCalibrationData;
+    // Data retreived from calibration, can use only the first index or the whole List<>
+    private List<UserData> mPositionCalibrationData;
 
     // Data retreived from the player during the game
-    List<Vector2> mPositionPlayer;
+    private List<Vector2> mPositionPlayer;
 
 
     // Other variables

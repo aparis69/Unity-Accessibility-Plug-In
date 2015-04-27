@@ -84,9 +84,18 @@ public class CalibrationDataRead
         return averageKeyInputValue;
     }
 
-    public static List<Vector2> GetMousePositionData()
+    public static List<UserData> GetMousePositionData()
     {
-        int numberOfFile = 1;
+        // Read the calibration files and store all the data into a List<UserData>, and return the List<KeyInput> that contains the average value for each keyboard input
+        int numberOfFile = 0;
+        do
+        {
+            if (System.IO.File.Exists(@"H:\Game Analytics\Data\Calibration\Mouse Positions\MousePositions" + numberOfFile.ToString() + ".txt"))
+                numberOfFile++;
+            else
+                break;
+        } while (true);
+
 
         // Read the data
         List<UserData> usersData = new List<UserData>();
@@ -111,7 +120,6 @@ public class CalibrationDataRead
         }
 
         // Return the average value from the user data
-        return usersData[0].GetMousePositions();
+        return usersData;
     }
-
 }
