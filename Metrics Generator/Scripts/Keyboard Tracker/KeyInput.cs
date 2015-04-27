@@ -6,7 +6,7 @@ public class KeyInput
     // Used in the tracking part
     private KeyCode key;
     private int hitCount;
-    private int doubleStrikingCount;
+    private int doubleStrikeCount;
 
     // Used to measure double strike hit
     private float timeSinceLastHit;
@@ -20,15 +20,26 @@ public class KeyInput
         
         timeSinceLastHit = -1f;
         hitCount = 0;
-        doubleStrikingCount = 0;
+        doubleStrikeCount = 0;
 
         occurences = 0;
+    }
+
+    public KeyInput(KeyCode code, int hitCount, int doubleStrikeCount)
+    {
+        this.key = code;
+
+        this.timeSinceLastHit = -1f;
+        this.hitCount = hitCount;
+        this.doubleStrikeCount = doubleStrikeCount;
+
+        this.occurences = 0;
     }
 
     public void IncreaseHit(float time)
     {
         if (time - timeSinceLastHit < 0.3f)
-            doubleStrikingCount++;
+            doubleStrikeCount++;
 
         timeSinceLastHit = time;
         hitCount++;
@@ -41,7 +52,7 @@ public class KeyInput
 
     public void SetDoubleStrikingCount(int db)
     {
-        doubleStrikingCount = db;
+        doubleStrikeCount = db;
     }
 
     public KeyCode GetKeyCode()
@@ -56,7 +67,7 @@ public class KeyInput
 
     public int GetDoubleStrikingCount()
     {
-        return doubleStrikingCount;
+        return doubleStrikeCount;
     }
 
     public void SetOccurences(int o)

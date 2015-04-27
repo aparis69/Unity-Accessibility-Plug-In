@@ -4,21 +4,22 @@ using System.Collections.Generic;
 
 public class KeyboardTracker : MonoBehaviour 
 {
-    public KeyboardAnalyser Analyser;
     public bool calibrationMode;
 
+    private KeyboardAnalyser analyser;
     static private KeyCode[] validKeyCodes;
     private List<KeyInput> keysInput;
     private bool analyserOn;
 
     void Start()
     {
+        analyser = (KeyboardAnalyser)GameObject.FindObjectOfType(typeof(KeyboardAnalyser));
         keysInput = new List<KeyInput>();
-
-        if (validKeyCodes != null) return;
-        validKeyCodes = (KeyCode[])System.Enum.GetValues(typeof(KeyCode));
-
         analyserOn = false;
+
+        if (validKeyCodes != null) 
+            return;
+        validKeyCodes = (KeyCode[])System.Enum.GetValues(typeof(KeyCode));
     }
 
     void Update()
@@ -79,8 +80,8 @@ public class KeyboardTracker : MonoBehaviour
                 }
                 else
                 {
-                    Analyser.CanAnalyse(true);
-                    Analyser.SetPlayerKeyboardData(keysInput);
+                    analyser.CanAnalyse(true);
+                    analyser.SetPlayerKeyboardData(keysInput);
                 }
             }
 
