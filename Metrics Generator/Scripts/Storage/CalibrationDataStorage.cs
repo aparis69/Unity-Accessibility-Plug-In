@@ -84,9 +84,9 @@ public class CalibrationDataStorage
 
         // Create the file
         if (calibrationMode)
-            System.IO.File.WriteAllLines(@"H:\Game Analytics\Data\Calibration\Mouse Positions\MousePositions" + i.ToString() + ".txt", mousePositionsStrings.ToArray());
+            System.IO.File.WriteAllLines(@"H:\Game Analytics\Data\Calibration\Keyboard Inputs\Keyboard" + i.ToString() + ".txt", mousePositionsStrings.ToArray());
         else
-            System.IO.File.WriteAllLines(@"H:\Game Analytics\Data\Analysis\Mouse Positions\MousePositions" + i.ToString() + ".txt", mousePositionsStrings.ToArray());
+            System.IO.File.WriteAllLines(@"H:\Game Analytics\Data\Analysis\Keyboard Inputs\Keyboard" + i.ToString() + ".txt", mousePositionsStrings.ToArray());
     }
 
     public static void StoreMouseMovements(List<float> mouseMovements, bool calibrationMode)
