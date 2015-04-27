@@ -7,13 +7,16 @@ public class MouseTracker : MonoBehaviour
 {
     public bool calibrationMode;
 
+    private MouseAnalyser analyser;
     private float[][] mousePositionArray;
     private List<float> mouseMovementsList;
-    private List<Vector2> mousePointerPosition;   
-
+    private List<Vector2> mousePointerPosition;
+    private bool analyserOn;
 
 	void Start () 
     {
+        analyser = (MouseAnalyser)GameObject.FindObjectOfType(typeof(KeyboardAnalyser));
+
         mousePositionArray = new float[Screen.width][];
         for (int i = 0; i < Screen.width; i++)
             mousePositionArray[i] = new float[Screen.height];
@@ -24,24 +27,26 @@ public class MouseTracker : MonoBehaviour
 
         mouseMovementsList = new List<float>();
 
-        mousePointerPosition = new List<Vector2>();
-        
+        mousePointerPosition = new List<Vector2>();      
 	}
 	
 	void Update () 
     {
-        // Mouse Movements Track
-        mouseMovementsList.Add((Mathf.Abs(Input.GetAxis("Mouse X")) + Mathf.Abs(Input.GetAxis("Mouse Y"))) / 2f * 50); 
-
-        // Mouse Position Track
-        if (Screen.width - (int)Input.mousePosition.x > 0 && Screen.width - (int)Input.mousePosition.x < Screen.width) //if mouse is in the screen
+        if(CheckGameStatus())
         {
-            if (Screen.height - (int)Input.mousePosition.y > 0 && Screen.height - (int)Input.mousePosition.y < Screen.height) //if mouse is in the screen
+            // Mouse Movements Track
+            mouseMovementsList.Add((Mathf.Abs(Input.GetAxis("Mouse X")) + Mathf.Abs(Input.GetAxis("Mouse Y"))) / 2f * 50);
+
+            // Mouse Position Track
+            if (Screen.width - (int)Input.mousePosition.x > 0 && Screen.width - (int)Input.mousePosition.x < Screen.width) //if mouse is in the screen
             {
-                mousePositionArray[Screen.width - (int)Input.mousePosition.x][Screen.height - (int)Input.mousePosition.y] += 0.1f; //store position in an array
-                mousePointerPosition.Add(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+                if (Screen.height - (int)Input.mousePosition.y > 0 && Screen.height - (int)Input.mousePosition.y < Screen.height) //if mouse is in the screen
+                {
+                    mousePositionArray[Screen.width - (int)Input.mousePosition.x][Screen.height - (int)Input.mousePosition.y] += 0.1f; //store position in an array
+                    mousePointerPosition.Add(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+                }
             }
-        }
+        }     
     }
 
     void OnDestroy()
@@ -59,5 +64,33 @@ public class MouseTracker : MonoBehaviour
     public List<float> GetMouseMovementsList()
     {
         return mouseMovementsList;
+    }
+
+    bool CheckGameStatus()
+    {
+        int status = PlayerPrefs.GetInt("Game off");
+
+        if (status == 1)
+        {
+            if (!analyserOn)
+            {
+                analyserOn = true;
+
+                // if calibration mode not activated, analyse the current player data
+                if (calibrationMode)
+                {
+                    CalibrationDataStorage.StoreMousePositionFromList(mousePointerPosition, calibrationMode);
+                }
+                else
+                {
+                    //analyser.CanAnalyse(true);
+                    //analyser.SetPlayerKeyboardData(keysInput);
+                }
+            }
+
+            return false;
+        }
+
+        return true;
     }
 }

@@ -86,11 +86,32 @@ public class CalibrationDataRead
 
     public static List<Vector2> GetMousePositionData()
     {
-        return null;
+        int numberOfFile = 1;
+
+        // Read the data
+        List<UserData> usersData = new List<UserData>();
+        for (int i = 0; i < numberOfFile; i++)
+        {
+            UserData user = new UserData();
+            string[] lines = System.IO.File.ReadAllLines(@"H:\Game Analytics\Data\Calibration\Mouse Positions\MousePositions" + i.ToString() + ".txt");
+
+            foreach (string line in lines)
+            {
+                string[] words = line.Split(',');
+                float x, y;
+                float.TryParse(words[0], out x);
+                float.TryParse(words[1], out y);
+
+                Vector2 vec = new Vector2(x, y);
+
+                user.AddMousePosition(vec);
+            }
+
+            usersData.Add(user);
+        }
+
+        // Return the average value from the user data
+        return usersData[0].GetMousePositions();
     }
 
-    public static void GetMouseMovementsData()
-    {
-        
-    }
 }
