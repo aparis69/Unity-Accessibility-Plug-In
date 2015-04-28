@@ -12,6 +12,7 @@ public class MouseAnalyser : MonoBehaviour
     private List<Vector2> mPositionPlayer;
 
 
+
     // Other variables
     private bool canAnalyse;
 
