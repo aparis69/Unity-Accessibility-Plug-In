@@ -32,7 +32,6 @@ public class MouseAnalyser : MonoBehaviour
 
     private void CompareData()
     {
-
     }
 
     public void SetMousePositionFromPlayer(List<Vector2> mPlayer)
