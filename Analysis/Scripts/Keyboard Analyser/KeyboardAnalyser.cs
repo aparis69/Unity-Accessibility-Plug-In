@@ -37,7 +37,7 @@ public class KeyboardAnalyser : MonoBehaviour
         // Store the difference between the average values and the player values in dataResult list
         for (int i = 0 ; i < keysInput.Count ; i++)
         {
-            KeyInput k = FindSimilarKeyInput(keysInput[i]);
+            KeyInput k = FindSameKeyInput(keysInput[i]);
             if(k != null)
                 dataResult.Add(new KeyInput(k.GetKeyCode(), Mathf.Max(k.GetHitCount(), keysInput[i].GetHitCount()) - Mathf.Min(k.GetHitCount(), keysInput[i].GetHitCount()),
                                                             Mathf.Max(k.GetDoubleStrikingCount(), keysInput[i].GetDoubleStrikingCount()) - Mathf.Min(k.GetDoubleStrikingCount(), keysInput[i].GetDoubleStrikingCount())));
@@ -54,7 +54,7 @@ public class KeyboardAnalyser : MonoBehaviour
         canAnalyse = false;
     }
 
-    private KeyInput FindSimilarKeyInput(KeyInput key)
+    private KeyInput FindSameKeyInput(KeyInput key)
     {
         for (int i = 0; i < averageKeyInputValues.Count; i++)
         {
