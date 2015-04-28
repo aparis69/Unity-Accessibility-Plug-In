@@ -13,6 +13,10 @@ public class MouseAnalyser : MonoBehaviour
 
 
 
+
+
+
+
     // Other variables
     private bool canAnalyse;
 
