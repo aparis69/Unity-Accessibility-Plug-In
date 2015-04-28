@@ -1,7 +1,12 @@
 *.unity
 *.unity.meta
 *.dll
+*.cs.meta
+*.meta
 UnityVS.meta
 UnityVS/
 *.prefab
 /Editor/CrossPlatformInput/CrossPlatformInputInitialize.cs
+Scenes/
+Standard\ Assets/
+Game/Graphics/
