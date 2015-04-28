@@ -11,12 +11,6 @@ public class MouseAnalyser : MonoBehaviour
     // Data retreived from the player during the game
     private List<Vector2> mPositionPlayer;
 
-
-
-
-
-
-
     // Other variables
     private bool canAnalyse;
 
