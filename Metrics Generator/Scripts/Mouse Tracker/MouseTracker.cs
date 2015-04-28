@@ -11,6 +11,8 @@ public class MouseTracker : MonoBehaviour
     private List<float> mouseMovementsList;
     private List<Vector2> mousePointerPosition;
     private bool analyserOn;
+    private List<int> mouseButtonClicks;
+    private List<int> mouseClickCount;
 
 	void Start () 
     {
@@ -18,6 +20,11 @@ public class MouseTracker : MonoBehaviour
 
         mouseMovementsList = new List<float>();
         mousePointerPosition = new List<Vector2>();      
+        mouseButtonClicks = new List<int>();
+        mouseClickCount = new List<int>();
+        mouseClickCount.Add(0);
+        mouseClickCount.Add(0);
+        mouseClickCount.Add(0);
 	}
 	
 	void Update () 
@@ -31,6 +38,23 @@ public class MouseTracker : MonoBehaviour
             if (Screen.width - (int)Input.mousePosition.x > 0 && Screen.width - (int)Input.mousePosition.x < Screen.width) //if mouse is in the screen
                 if (Screen.height - (int)Input.mousePosition.y > 0 && Screen.height - (int)Input.mousePosition.y < Screen.height) //if mouse is in the screen
                     mousePointerPosition.Add(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+
+           // Mouse Button Clicking
+            if (Input.GetMouseButtonDown(0)) //left click
+            {
+                mouseButtonClicks.Add(0);
+                mouseClickCount[0]++;
+            }
+            if (Input.GetMouseButtonDown(1)) //right click
+            {
+                mouseButtonClicks.Add(1);
+                mouseClickCount[1]++;
+            }
+            if (Input.GetMouseButtonDown(2)) //middle click
+            {
+                mouseButtonClicks.Add(2);
+                mouseClickCount[2]++;
+            }                    
         }     
     }
 
@@ -53,6 +77,7 @@ public class MouseTracker : MonoBehaviour
                 if (calibrationMode)
                 {
                     CalibrationDataStorage.StoreMousePositionFromList(mousePointerPosition, calibrationMode);
+                    CalibrationDataStorage.StoreMouseClicks(mouseButtonClicks, mouseClickCount, calibrationMode);
                 }
                 else
                 {

@@ -53,6 +53,43 @@ public class CalibrationDataStorage
 			System.IO.File.WriteAllLines("./Data/Analysis/Mouse Positions/MousePositions" + i.ToString() + ".txt", mousePositionsStrings.ToArray());
     }
 
+    public static void StoreMouseClicks(List<int> mouseButtonClicks, List<int> mouseClickCount, bool calibrationMode)
+    {
+
+        List<string> mouseClicksStrings = new List<string>();
+        foreach (int Click in mouseButtonClicks)
+        {
+            if (Click == 0)
+                mouseClicksStrings.Add(Click.ToString() + " //Left Click");
+            if (Click == 1)
+                mouseClicksStrings.Add(Click.ToString() + " //Right Click");
+            if (Click == 2)
+                mouseClicksStrings.Add(Click.ToString() + " //Middle Click");
+        }
+
+        mouseClicksStrings.Add("Left clicks : " + mouseClickCount[0]);
+        mouseClicksStrings.Add("Right clicks : " + mouseClickCount[1]);
+        mouseClicksStrings.Add("Middle clicks : " + mouseClickCount[2]);
+        
+
+        // Determine a new name for the future file
+        int i = 0;
+        do
+        {
+            if (calibrationMode && !System.IO.File.Exists("./Data/Calibration/Mouse Clicks/MouseClicks" + i.ToString() + ".txt"))
+                break;
+            if (!calibrationMode && !System.IO.File.Exists("./Data/Analysis/Mouse Clicks/MouseClicks" + i.ToString() + ".txt"))
+                break;
+            i++;
+        } while (true);
+
+        // Create the file
+        if (calibrationMode)
+            System.IO.File.WriteAllLines("./Data/Calibration/Mouse Clicks/MouseClicks" + i.ToString() + ".txt", mouseClicksStrings.ToArray());
+        else
+            System.IO.File.WriteAllLines("./Data/Analysis/Mouse Clicks/MouseClicks" + i.ToString() + ".txt", mouseClicksStrings.ToArray());
+    }
+
     public static void StoreMouseMovements(List<float> mouseMovements, bool calibrationMode)
     {
         // Format the content
