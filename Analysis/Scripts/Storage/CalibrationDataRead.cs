@@ -10,7 +10,7 @@ public class CalibrationDataRead
         int numberOfFile = 0;
         do
         {
-            if (System.IO.File.Exists(@"H:\Game Analytics\Data\Calibration\Keyboard Inputs\Keyboard" + numberOfFile.ToString() + ".txt"))
+            if (System.IO.File.Exists("./Data/Calibration/Keyboard Inputs/Keyboard" + numberOfFile.ToString() + ".txt"))
                 numberOfFile++;
             else
                 break;
@@ -21,7 +21,7 @@ public class CalibrationDataRead
         for (int i = 0; i < numberOfFile; i++)
         {
             List<KeyInput> keys = new List<KeyInput>();
-            string[] lines = System.IO.File.ReadAllLines(@"H:\Game Analytics\Data\Calibration\Keyboard Inputs\Keyboard" + i.ToString() + ".txt");
+            string[] lines = System.IO.File.ReadAllLines("./Data/Calibration/Keyboard Inputs/Keyboard" + i.ToString() + ".txt");
 
             foreach(string line in lines)
             {
@@ -90,7 +90,7 @@ public class CalibrationDataRead
         int numberOfFile = 0;
         do
         {
-            if (System.IO.File.Exists(@"H:\Game Analytics\Data\Calibration\Mouse Positions\MousePositions" + numberOfFile.ToString() + ".txt"))
+			if (System.IO.File.Exists("./Data/Calibration/Mouse Positions/MousePositions" + numberOfFile.ToString() + ".txt"))
                 numberOfFile++;
             else
                 break;
@@ -102,7 +102,7 @@ public class CalibrationDataRead
         for (int i = 0; i < numberOfFile; i++)
         {
             UserData user = new UserData();
-            string[] lines = System.IO.File.ReadAllLines(@"H:\Game Analytics\Data\Calibration\Mouse Positions\MousePositions" + i.ToString() + ".txt");
+            string[] lines = System.IO.File.ReadAllLines("./Data/Calibration/Mouse Positions/MousePositions" + i.ToString() + ".txt");
 
             foreach (string line in lines)
             {
