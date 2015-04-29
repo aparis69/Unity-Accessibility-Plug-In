@@ -6,8 +6,8 @@ public class MouseAnalyser
 {
 	// Variables to personalize the jittering calculation algorithm
 	private static int previousVectorsToCompare = 10;
-	private static float magnitudeThreshold = 3.0f;
-	private static float directionAngleChangeThreshold = 45.0f;
+	private static float magnitudeThreshold = 1.0f;
+	private static float directionAngleChangeThreshold = 90.0f;
 
 	public static void CompareData(UserData calibrateData, UserData playerData)
 	{
@@ -37,6 +37,7 @@ public class MouseAnalyser
 					mouseVectorSnippet[i] = currentVector;
 				else
 					mouseVectorSnippet[i] = Vector2.zero;
+
 			}
 
 			//Count quick direction changes in the snippet
@@ -48,8 +49,8 @@ public class MouseAnalyser
 
 				for (int k = j - 1; k >= 0; k--)
 				{
-					if (mousePositions[j] != Vector2.zero && currentVector != Vector2.zero
-					&& Vector2.Angle(mousePositions[j], currentVector) < directionAngleChangeThreshold)
+					if (mouseVectorSnippet[k] != Vector2.zero && currentVector != Vector2.zero
+					&& Vector2.Angle(mouseVectorSnippet[k], currentVector) > directionAngleChangeThreshold)
 					{
 						directionChangeCount++;
 						j = k;
