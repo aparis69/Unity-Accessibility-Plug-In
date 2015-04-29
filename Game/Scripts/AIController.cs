@@ -20,4 +20,9 @@ public class AIController : MonoBehaviour
 	{
 		navMesh.destination = goal.transform.position;
 	}
+
+	public void DesactiveAI()
+	{
+		navMesh.destination = this.transform.position;
+	}
 }
