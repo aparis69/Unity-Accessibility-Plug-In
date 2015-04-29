@@ -5,14 +5,17 @@ using System.Collections.Generic;
 public class MouseInput
 {
 	private List<Vector2> mousePointerPosition;
-	private List<int> mouseButtonClicks;
-	private List<int> mouseClickCount;
+    private List<float> mouseMovementsList;
+	private List<string> mouseButtonClicks;
+    private List<MouseKeyInput> mouseKeyList;
+    
 
 	public MouseInput()
 	{
 		mousePointerPosition = new List<Vector2>();
-		mouseButtonClicks = new List<int>();
-		mouseClickCount = new List<int>();
+        mouseMovementsList = new List<float>();
+		mouseButtonClicks = new List<string>();
+        mouseKeyList = new List<MouseKeyInput>();       
 	}
 
 	public void AddMousePointerPosition(Vector2 pos)
@@ -20,13 +23,38 @@ public class MouseInput
 		mousePointerPosition.Add(pos);
 	}
 
-	public void AddMouseButtonClicks(int click)
+    public void AddMouseMovement(float mov)
+    {
+        mouseMovementsList.Add(mov);
+    }
+
+	public void AddMouseButtonClick(string click)
 	{
 		mouseButtonClicks.Add(click);
 	}
 
-	public void IncreaseMouseClickCount()
-	{
-		//mouse
-	}
+    public List<Vector2> getMousePointerPosition()
+    {
+        return this.mousePointerPosition;
+    }
+
+    public List<float> getMouseMovementsList()
+    {
+        return this.mouseMovementsList;
+    }
+
+    public List<string> getMouseButtonClicks()
+    {
+        return this.mouseButtonClicks;
+    }
+
+    public void addMouseKeyList(List<MouseKeyInput> _MKI)
+    {
+        this.mouseKeyList = _MKI;
+    }
+
+    public List<MouseKeyInput> getMouseKeyList()
+    {
+        return this.mouseKeyList;
+    }
 }
