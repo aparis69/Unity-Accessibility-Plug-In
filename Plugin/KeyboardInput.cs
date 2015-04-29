@@ -1,15 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class KeyboardInput : MonoBehaviour {
+public class KeyboardInput 
+{
+	List<KeyInput> inputs;
 
-	// Use this for initialization
-	void Start () {
-	
+	public KeyboardInput()
+	{
+		inputs = new List<KeyInput>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void AddKeyInput(KeyInput newKey)
+	{
+		inputs.Add(newKey);
+	}
+
+	public KeyInput GetExistingKeyInput(KeyCode code)
+	{
+		foreach (KeyInput KC in inputs)
+		{
+			if (code == KC.GetKeyCode())
+				return KC;
+		}
+
+		return null;
+	}
+
+	public List<KeyInput> GetKeyInput()
+	{
+		return inputs;
+	}
+
+	public int GetKeyInputCount()
+	{
+		return inputs.Count;
 	}
 }
