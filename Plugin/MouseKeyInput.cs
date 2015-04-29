@@ -1,15 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MouseKeyInput : MonoBehaviour {
+public class MouseKeyInput 
+{
+    private string type;
+    private int count;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public MouseKeyInput(string type)
+    {
+        this.type = type;
+        count = 0;
+    }
+
+    public string getType()
+    {
+        return this.type;
+    }
+
+    public int getCount()
+    {
+        return this.count;
+    }
+
+    public void setCount(int count)
+    {
+        this.count = count;
+    }
+
+    public void incrementCount()
+    {
+        this.count++;
+    }
 }
