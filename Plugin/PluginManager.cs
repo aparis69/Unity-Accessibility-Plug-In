@@ -14,6 +14,11 @@ public class PluginManager : MonoBehaviour
 		playerData = new UserData();
 		keyboardTracker = this.GetComponent<KeyboardTracker>();
 		mouseTracker = this.GetComponent<MouseTracker>();
+
+		if (PlayerPrefs.GetInt("CalibrationMode") == 1)
+			calibrationMode = false;
+		else
+			calibrationMode = true;
 	}
 	
 	void Update () 
