@@ -6,9 +6,12 @@ public class KeyboardTracker : MonoBehaviour
 	private static KeyCode[] validKeyCodes;
 	private KeyboardInput keyboardInput;
 
+	private bool analyseEnabled;
+
 	void Start () 
 	{
 		keyboardInput = new KeyboardInput();
+		analyseEnabled = true;
 
 		// Intializing static member
 		if (validKeyCodes != null)
@@ -18,16 +21,19 @@ public class KeyboardTracker : MonoBehaviour
 	
 	void Update () 
 	{
-		KeyCode keyDown = FetchKey();
-
-		if (keyDown != KeyCode.None)
+		if (analyseEnabled)
 		{
-			KeyInput similarKey = keyboardInput.GetExistingKeyInput(keyDown);
+			KeyCode keyDown = FetchKey();
 
-			if (similarKey != null)
-				similarKey.IncreaseHitCount(Time.realtimeSinceStartup);
-			else
-				keyboardInput.AddKeyInput(new KeyInput(keyDown, 0, 0));
+			if (keyDown != KeyCode.None)
+			{
+				KeyInput similarKey = keyboardInput.GetExistingKeyInput(keyDown);
+
+				if (similarKey != null)
+					similarKey.IncreaseHitCount(Time.realtimeSinceStartup);
+				else
+					keyboardInput.AddKeyInput(new KeyInput(keyDown, 0, 0));
+			}
 		}
 	}
 
@@ -53,5 +59,10 @@ public class KeyboardTracker : MonoBehaviour
 	public KeyboardInput GetKeyboardInput()
 	{
 		return keyboardInput;
+	}
+
+	public void SetAnalyse(bool a)
+	{
+		analyseEnabled = a;
 	}
 }

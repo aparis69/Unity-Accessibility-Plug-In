@@ -6,6 +6,7 @@ public class KeyInput
 	private KeyCode key;
 	private int hitCount;
 	private int doubleStrikeCount;
+	private int occurrences;
 
 	private float timeSinceLastHit;
 
@@ -14,6 +15,7 @@ public class KeyInput
 		this.key = code;
 		hitCount = 0;
 		doubleStrikeCount = 0;
+		occurrences = 0;
 		timeSinceLastHit = -1f;
 	}
 
@@ -22,6 +24,7 @@ public class KeyInput
 		this.key = code;
 		this.hitCount = hitCount;
 		this.doubleStrikeCount = doubleStrikeCount;
+		occurrences = 0;
 		this.timeSinceLastHit = -1f;
 	}
 
@@ -57,5 +60,15 @@ public class KeyInput
 	public int GetDoubleStrikingCount()
 	{
 		return doubleStrikeCount;
+	}
+
+	public void SetOccurences(int a)
+	{
+		occurrences = a;
+	}
+
+	public int GetOccurences()
+	{
+		return occurrences;
 	}
 }

@@ -13,6 +13,8 @@ public class MouseTracker : MonoBehaviour
 
     private MouseInput _MouseInput;
 
+	private bool analyseEnabled;
+
     void Start()
     {
         mousePointerPosition = new List<Vector2>();
@@ -22,32 +24,37 @@ public class MouseTracker : MonoBehaviour
 
         left = new MouseKeyInput("Left Button");
         right = new MouseKeyInput("Right Button");
-        middle = new MouseKeyInput("Middle Button"); 
+        middle = new MouseKeyInput("Middle Button");
+
+		analyseEnabled = true;
     }
 
     void Update()
-    {        
-        // Mouse Position Track
-        if (Screen.width - (int)Input.mousePosition.x > 0 && Screen.width - (int)Input.mousePosition.x < Screen.width) //if mouse is in the screen
-            if (Screen.height - (int)Input.mousePosition.y > 0 && Screen.height - (int)Input.mousePosition.y < Screen.height) //if mouse is in the screen
-                _MouseInput.AddMousePointerPosition(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+    {
+		if (analyseEnabled)
+		{
+			// Mouse Position Track
+			if (Screen.width - (int)Input.mousePosition.x > 0 && Screen.width - (int)Input.mousePosition.x < Screen.width) //if mouse is in the screen
+				if (Screen.height - (int)Input.mousePosition.y > 0 && Screen.height - (int)Input.mousePosition.y < Screen.height) //if mouse is in the screen
+					_MouseInput.AddMousePointerPosition(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
 
-        // Mouse Button Clicking
-        if (Input.GetMouseButtonDown(0)) //left click
-        {
-            _MouseInput.AddMouseButtonClick("Left Button");
-            left.incrementCount();
-        }
-        if (Input.GetMouseButtonDown(1)) //right click
-        {
-            _MouseInput.AddMouseButtonClick("Right Button");
-            right.incrementCount();
-        }
-        if (Input.GetMouseButtonDown(2)) //middle click
-        {
-            _MouseInput.AddMouseButtonClick("Middle Button");
-            middle.incrementCount();
-        }      
+			// Mouse Button Clicking
+			if (Input.GetMouseButtonDown(0)) //left click
+			{
+				_MouseInput.AddMouseButtonClick("Left Button");
+				left.incrementCount();
+			}
+			if (Input.GetMouseButtonDown(1)) //right click
+			{
+				_MouseInput.AddMouseButtonClick("Right Button");
+				right.incrementCount();
+			}
+			if (Input.GetMouseButtonDown(2)) //middle click
+			{
+				_MouseInput.AddMouseButtonClick("Middle Button");
+				middle.incrementCount();
+			}      
+		}
     }
 
 	public MouseInput GetMouseInput()
@@ -59,5 +66,10 @@ public class MouseTracker : MonoBehaviour
 		_MouseInput.addMouseKeyList(_MKI);
 
 		return _MouseInput;
+	}
+
+	public void SetAnalyse(bool a)
+	{
+		analyseEnabled = a;
 	}
 }

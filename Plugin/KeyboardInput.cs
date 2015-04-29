@@ -16,6 +16,11 @@ public class KeyboardInput
 		inputs.Add(newKey);
 	}
 
+	public void SetKeyInput(List<KeyInput> list)
+	{
+		inputs = list;
+	}
+
 	public KeyInput GetExistingKeyInput(KeyCode code)
 	{
 		foreach (KeyInput KC in inputs)

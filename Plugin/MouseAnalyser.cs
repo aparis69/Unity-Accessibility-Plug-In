@@ -4,20 +4,22 @@ using System.Collections.Generic;
 
 public class MouseAnalyser 
 {
+	// Variables to personalize the jittering calculation algorithm
 	private static int previousVectorsToCompare = 10;
 	private static float magnitudeThreshold = 3.0f;
 	private static float directionAngleChangeThreshold = 45.0f;
 
 	public static void CompareData(UserData calibrateData, UserData playerData)
 	{
-		int c1 = CountQuickMouseDirectionChanges(calibrateData.GetMouseInput().getMousePointerPosition());
 		int c2 = CountQuickMouseDirectionChanges(playerData.GetMouseInput().getMousePointerPosition());
 
-		if (c2 > c1 * 5)
+		if (c2 > calibrateData.GetMouseInput().GetJitteringCount() * 5)
+		{
 			Debug.Log("Player had trouble using the mouse correctly. Unusual jittering in the mouse inputs was detected.");
+		}
 	}
 
-	private static int CountQuickMouseDirectionChanges(List<Vector2> mousePositions)
+	public static int CountQuickMouseDirectionChanges(List<Vector2> mousePositions)
 	{
 		Vector2[] mVectorSnippet;
 		Vector2 currentVector;

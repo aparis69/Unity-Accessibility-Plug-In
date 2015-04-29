@@ -8,7 +8,7 @@ public class MouseInput
     private List<float> mouseMovementsList;
 	private List<string> mouseButtonClicks;
     private List<MouseKeyInput> mouseKeyList;
-    
+	private int jitteringCount;
 
 	public MouseInput()
 	{
@@ -31,6 +31,11 @@ public class MouseInput
 	public void AddMouseButtonClick(string click)
 	{
 		mouseButtonClicks.Add(click);
+	}
+
+	public void SetMousePointerPosition(List<Vector2> list)
+	{
+		mousePointerPosition = list;
 	}
 
     public List<Vector2> getMousePointerPosition()
@@ -57,4 +62,14 @@ public class MouseInput
     {
         return this.mouseKeyList;
     }
+
+	public void SetJitteringCount(int j)
+	{
+		jitteringCount = j;
+	}
+
+	public int GetJitteringCount()
+	{
+		return jitteringCount;
+	}
 }

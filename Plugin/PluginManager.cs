@@ -9,22 +9,21 @@ public class PluginManager : MonoBehaviour
 	private MouseTracker mouseTracker;
 	private UserData playerData;
 
-	private float analyseTime = 30f;
-	private float time;
-
 	void Start ()
 	{
 		playerData = new UserData();
 		keyboardTracker = this.GetComponent<KeyboardTracker>();
 		mouseTracker = this.GetComponent<MouseTracker>();
-
-		time = Time.realtimeSinceStartup + analyseTime;
 	}
 	
 	void Update () 
 	{
-		if (Time.realtimeSinceStartup > time)
+		if (Input.GetKeyDown(KeyCode.O))
 		{
+			// Stop the tracking
+			keyboardTracker.SetAnalyse(false);
+			mouseTracker.SetAnalyse(false);
+
 			playerData.SetKeyboardInput(keyboardTracker.GetKeyboardInput());
 			playerData.SetMouseInput(mouseTracker.GetMouseInput());
 
