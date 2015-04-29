@@ -8,6 +8,8 @@ public class KeyboardTracker : MonoBehaviour
 
 	void Start () 
 	{
+		keyboardInput = new KeyboardInput();
+
 		// Intializing static member
 		if (validKeyCodes != null)
 			return;

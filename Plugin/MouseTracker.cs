@@ -5,12 +5,7 @@ using System.Collections.Generic;
 
 public class MouseTracker : MonoBehaviour
 {
-    public bool calibrationMode;
-
-    private MouseAnalyser analyser;
-    
     private List<Vector2> mousePointerPosition;
-    private bool analyserOn;
     private List<string> mouseButtonClicks;
     private List<int> mouseClickCount;
 
@@ -20,23 +15,18 @@ public class MouseTracker : MonoBehaviour
 
     void Start()
     {
-        analyser = (MouseAnalyser)GameObject.FindObjectOfType(typeof(MouseAnalyser));
-
         mousePointerPosition = new List<Vector2>();
         mouseButtonClicks = new List<string>();
         mouseClickCount = new List<int>();
+		_MouseInput = new MouseInput();
 
         left = new MouseKeyInput("Left Button");
         right = new MouseKeyInput("Right Button");
-        middle = new MouseKeyInput("Middle Button");
-    
+        middle = new MouseKeyInput("Middle Button"); 
     }
 
     void Update()
     {        
-        // Mouse Movements Track
-        _MouseInput.AddMouseMovement((Mathf.Abs(Input.GetAxis("Mouse X")) + Mathf.Abs(Input.GetAxis("Mouse Y"))) / 2f * 50);
-
         // Mouse Position Track
         if (Screen.width - (int)Input.mousePosition.x > 0 && Screen.width - (int)Input.mousePosition.x < Screen.width) //if mouse is in the screen
             if (Screen.height - (int)Input.mousePosition.y > 0 && Screen.height - (int)Input.mousePosition.y < Screen.height) //if mouse is in the screen
@@ -60,13 +50,14 @@ public class MouseTracker : MonoBehaviour
         }      
     }
 
-    void OnDestroy()
-    {
-        List<MouseKeyInput> _MKI = new List<MouseKeyInput>();
-        _MKI.Add(left);
-        _MKI.Add(right);
-        _MKI.Add(middle);
-        _MouseInput.addMouseKeyList(_MKI);
+	public MouseInput GetMouseInput()
+	{
+		List<MouseKeyInput> _MKI = new List<MouseKeyInput>();
+		_MKI.Add(left);
+		_MKI.Add(right);
+		_MKI.Add(middle);
+		_MouseInput.addMouseKeyList(_MKI);
 
-    }
+		return _MouseInput;
+	}
 }

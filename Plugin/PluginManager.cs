@@ -26,7 +26,7 @@ public class PluginManager : MonoBehaviour
 		if (Time.realtimeSinceStartup > time)
 		{
 			playerData.SetKeyboardInput(keyboardTracker.GetKeyboardInput());
-			//playerData.SetMouseInput(mouseTracker.getMouseInput());
+			playerData.SetMouseInput(mouseTracker.GetMouseInput());
 
 			if (calibrationMode)
 			{
@@ -35,8 +35,8 @@ public class PluginManager : MonoBehaviour
 			else
 			{
 				UserData calibrateData = DataStorage.GetCalibrateData();
-				KeyboardAnalyser.CompareData(null, playerData);
-				//MouseAnalyser.CompareData();
+				KeyboardAnalyser.CompareData(calibrateData, playerData);
+				MouseAnalyser.CompareData(calibrateData, playerData);
 			}
 		}
 	}
