@@ -21,7 +21,7 @@ public class MouseAnalyser
 
 	public static int CountQuickMouseDirectionChanges(List<Vector2> mousePositions)
 	{
-		Vector2[] mVectorSnippet;
+		Vector2[] mouseVectorSnippet;
 		Vector2 currentVector;
 		int directionChangeCount = 0;
 		int currentCount = 0;
@@ -29,20 +29,20 @@ public class MouseAnalyser
 		while (currentCount + previousVectorsToCompare < mousePositions.Count)
 		{
 			//Store a snippet of mouse directions
-			mVectorSnippet = new Vector2[previousVectorsToCompare];
+			mouseVectorSnippet = new Vector2[previousVectorsToCompare];
 			for (int i = 0; i < previousVectorsToCompare; i++)
 			{
 				currentVector = mousePositions[currentCount + i + 1] - mousePositions[currentCount + i];
 				if (currentVector.magnitude > magnitudeThreshold)
-					mVectorSnippet[i] = currentVector;
+					mouseVectorSnippet[i] = currentVector;
 				else
-					mVectorSnippet[i] = Vector2.zero;
+					mouseVectorSnippet[i] = Vector2.zero;
 			}
 
 			//Count quick direction changes in the snippet
-			for (int j = mVectorSnippet.Length - 1; j >= 0; j--)
+			for (int j = mouseVectorSnippet.Length - 1; j >= 0; j--)
 			{
-				currentVector = mVectorSnippet[j];
+				currentVector = mouseVectorSnippet[j];
 				if (currentVector == Vector2.zero)
 					continue;
 
