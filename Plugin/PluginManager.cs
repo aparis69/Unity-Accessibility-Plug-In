@@ -7,6 +7,7 @@ public class PluginManager : MonoBehaviour
 	
 	private KeyboardTracker keyboardTracker;
 	private MouseTracker mouseTracker;
+	private GenericTracker genericTracker;
 	private UserData playerData;
 
 	void Start ()
@@ -14,6 +15,7 @@ public class PluginManager : MonoBehaviour
 		playerData = new UserData();
 		keyboardTracker = this.GetComponent<KeyboardTracker>();
 		mouseTracker = this.GetComponent<MouseTracker>();
+		genericTracker = this.GetComponent<GenericTracker>();
 
 		if (PlayerPrefs.GetInt("CalibrationMode") == 1)
 			calibrationMode = false;
@@ -28,6 +30,7 @@ public class PluginManager : MonoBehaviour
 			// Stop the tracking
 			keyboardTracker.SetAnalyse(false);
 			mouseTracker.SetAnalyse(false);
+			genericTracker.SetAnalyse(false);
 
 			playerData.SetKeyboardInput(keyboardTracker.GetKeyboardInput());
 			playerData.SetMouseInput(mouseTracker.GetMouseInput());
