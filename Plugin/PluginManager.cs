@@ -32,10 +32,12 @@ public class PluginManager : MonoBehaviour
 			playerData.SetKeyboardInput(keyboardTracker.GetKeyboardInput());
 			playerData.SetMouseInput(mouseTracker.GetMouseInput());
 
+			// Calibration : storage
 			if (calibrationMode)
 			{
 				DataStorage.StoreCalibrateData(playerData);
 			}
+			// Analysis : get the calibrate data back, and compare
 			else
 			{
 				UserData calibrateData = DataStorage.GetCalibrateData();
