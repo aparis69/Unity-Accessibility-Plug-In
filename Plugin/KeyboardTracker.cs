@@ -32,7 +32,7 @@ public class KeyboardTracker : MonoBehaviour
 				if (similarKey != null)
 					similarKey.IncreaseHitCount(Time.realtimeSinceStartup);
 				else
-					keyboardInput.AddKeyInput(new KeyInput(keyDown, 0, 0));
+					keyboardInput.AddKeyInput(new KeyInput(keyDown, 1, 0));
 			}
 		}
 	}
