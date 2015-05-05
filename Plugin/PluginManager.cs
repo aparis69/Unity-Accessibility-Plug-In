@@ -46,8 +46,10 @@ public class PluginManager : MonoBehaviour
 			else
 			{
 				UserData calibrateData = DataStorage.GetCalibrateData();
+
 				KeyboardAnalyser.CompareData(calibrateData, playerData);
 				MouseAnalyser.CompareData(calibrateData, playerData);
+				GenericAnalyser.CompareData(calibrateData, playerData);
 			}
 		}
 	}
