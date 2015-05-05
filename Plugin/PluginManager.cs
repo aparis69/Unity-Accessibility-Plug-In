@@ -32,6 +32,8 @@ public class PluginManager : MonoBehaviour
 			mouseTracker.SetAnalyse(false);
 			genericTracker.SetAnalyse(false);
 
+			playerData.SetIntVariables(genericTracker.GetIntVariables());
+			playerData.SetFloatVariables(genericTracker.GetFloatVariables());
 			playerData.SetKeyboardInput(keyboardTracker.GetKeyboardInput());
 			playerData.SetMouseInput(mouseTracker.GetMouseInput());
 
