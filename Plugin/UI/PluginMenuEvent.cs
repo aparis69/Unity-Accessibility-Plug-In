@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class PluginMenuEvent : MonoBehaviour 
+public class PluginMenuEvent : MonoBehaviour
 {
 	public Material contrastIntensityMaterial;
 	public GameObject[] menuButtons;
@@ -64,7 +64,7 @@ public class PluginMenuEvent : MonoBehaviour
 		else
 		{
 			menuEnabled = true;
-	}
+		}
 	}
 
 
@@ -97,7 +97,7 @@ public class PluginMenuEvent : MonoBehaviour
 		{
 			for (int i = 0; i < cameras.Length; i++)
 				cameras[i].gameObject.GetComponent<ContrastIntensity>().SetIntensity(contrastSlider.value);
-	}
+		}
 	}
 
 
@@ -115,7 +115,7 @@ public class PluginMenuEvent : MonoBehaviour
 			// Activate color blind mode
 			colorBlindEnabled = true;
 
-	}
+		}
 	}
 
 
