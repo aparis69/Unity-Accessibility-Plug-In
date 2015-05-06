@@ -3,8 +3,7 @@ using System.Collections;
 
 public class AIManager : MonoBehaviour 
 {
-	public GameObject[] AI;
-
+	private GameObject[] AI;
 	private bool AIenabled;
 
 	void Start () 
