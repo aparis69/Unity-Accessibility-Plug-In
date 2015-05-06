@@ -88,10 +88,51 @@ public class DataStorage : MonoBehaviour
 
 			usersData.Add(user);
 		}
-
 		// Set the average jittering count
 		finalCalibrateData.GetMouseInput().SetJitteringCount(GetAverageJitteringCount(usersData));
 
+		
+		// Reading the generic calibration files
+		// int generic
+		string[] filesName = System.IO.Directory.GetFiles("./Data/Calibration/Generic/int/");
+		List<string> files = new List<string>();
+		foreach (string file in filesName)
+		{
+			string tmp = file;
+			for (int i = 0; i < 9; i++)
+			{
+				int index = tmp.IndexOf(i.ToString());
+				if (index != -1)
+					tmp = tmp.Remove(index);
+			}
+
+			if (!files.Contains(tmp))
+				files.Add(tmp);
+		}
+		for (int i = 0; i < files.Count; i++)
+			finalCalibrateData.GetIntVariables().Add(GetAverageIntVariables(files[i]));
+
+		// float generic
+		filesName = System.IO.Directory.GetFiles("./Data/Calibration/Generic/float/");
+		files = new List<string>();
+		foreach (string file in filesName)
+		{
+			string tmp = file;
+			for (int i = 0; i < 9; i++)
+			{
+				int index = tmp.IndexOf(i.ToString());
+				if (index != -1)
+					tmp = tmp.Remove(index);
+			}
+
+			if (!files.Contains(tmp))
+				files.Add(tmp);
+		}
+		for (int i = 0; i < files.Count; i++)
+			finalCalibrateData.GetFloatVariables().Add(GetAverageFloatVariables(filesName[i]));
+
+
+		// Return the calibrate data to the analyser
 		return finalCalibrateData;
 	}
 
@@ -145,6 +186,75 @@ public class DataStorage : MonoBehaviour
 		return averageKeyInputValue;
 	}
 
+	private static GenericVariable<int> GetAverageIntVariables(string variableName)
+	{
+		// Determine the number of calibration file available for this variable
+		int numberOfFile = 0;
+		do
+		{
+			if (System.IO.File.Exists(variableName + numberOfFile.ToString() + ".txt"))
+				numberOfFile++;
+			else
+				break;
+		} while (true);
+
+		if (numberOfFile == 0)
+			return null;
+
+
+		// Determine the average of the variable
+		int variableTotalAmount = 0;
+		for (int i = 0; i < numberOfFile; i++)
+		{
+			string[] lines = System.IO.File.ReadAllLines(variableName + i.ToString() + ".txt");
+			foreach (string line in lines)
+			{
+				int result;
+				int.TryParse(line, out result);
+				variableTotalAmount += result;
+			}
+		}
+
+
+		// Return a generic<int> variable containing the average
+		GenericVariable<int> ret = new GenericVariable<int>(variableTotalAmount / numberOfFile, variableName);
+		return ret;
+	}
+
+	private static GenericVariable<float> GetAverageFloatVariables(string variableName)
+	{
+		// Determine the number of calibration file available for this variable
+		int numberOfFile = 0;
+		do
+		{
+			if (System.IO.File.Exists(variableName + numberOfFile.ToString() + ".txt"))
+				numberOfFile++;
+			else
+				break;
+		} while (true);
+
+		if (numberOfFile == 0)
+			return null;
+
+		// Determine the average of the variable
+		float variableTotalAmount = 0;
+		for (int i = 0; i < numberOfFile; i++)
+		{
+			string[] lines = System.IO.File.ReadAllLines(variableName + i.ToString() + ".txt");
+			foreach (string line in lines)
+			{
+				float result;
+				float.TryParse(line, out result);
+				variableTotalAmount += result;
+			}
+		}
+
+
+		// Return a generic<float> variable containing the average
+		GenericVariable<float> ret = new GenericVariable<float>(variableTotalAmount / numberOfFile, variableName);
+		return ret;
+	}
+
 	// Storage
 	public static void StoreCalibrateData(UserData data)
 	{
@@ -152,7 +262,6 @@ public class DataStorage : MonoBehaviour
 		List<string> keyboardInputStrings = new List<string>();
 		foreach (KeyInput KC in data.GetKeyboardInput().GetKeyInput())
 			keyboardInputStrings.Add(KC.GetKeyCode().ToString() + "," + KC.GetHitCount().ToString() + "," + KC.GetDoubleStrikingCount().ToString());
-
 		// Determine a new name for the future file
 		int i = 0;
 		do
@@ -161,20 +270,16 @@ public class DataStorage : MonoBehaviour
 				break;
 			i++;
 		} while (true);
-
 		// Create the file
 		System.IO.File.WriteAllLines("./Data/Calibration/Keyboard Inputs/Keyboard" + i.ToString() + ".txt", keyboardInputStrings.ToArray());
 
 
 		// Mouse pointer position Storage
-		List<string> mousePositionsStrings = new List<string>();
-		
+		List<string> mousePositionsStrings = new List<string>();	
 		// Add the jittering count at the beginning of the file
 		mousePositionsStrings.Add(CalculateJitteringCount(data));
-		
 		foreach (Vector2 vec in data.GetMouseInput().getMousePointerPosition())
 			mousePositionsStrings.Add(vec.x + "," + vec.y);
-
 		// Determine a new name for the future file
 		i = 0;
 		do
@@ -183,8 +288,6 @@ public class DataStorage : MonoBehaviour
 				break;
 			i++;
 		} while (true);
-
-
 		// Create the file
 		System.IO.File.WriteAllLines("./Data/Calibration/Mouse Positions/MousePositions" + i.ToString() + ".txt", mousePositionsStrings.ToArray());
 
@@ -194,7 +297,6 @@ public class DataStorage : MonoBehaviour
 		mouseClicksStrings.Add("Left clicks : " + data.GetMouseInput().getMouseKeyList()[0].getCount());
 		mouseClicksStrings.Add("Right clicks : " + data.GetMouseInput().getMouseKeyList()[1].getCount());
 		mouseClicksStrings.Add("Middle clicks : " + data.GetMouseInput().getMouseKeyList()[2].getCount());
-
 		// Determine a new name for the future file
 		i = 0;
 		do
@@ -203,9 +305,41 @@ public class DataStorage : MonoBehaviour
 				break;
 			i++;
 		} while (true);
-
 		// Create the file
 		System.IO.File.WriteAllLines("./Data/Calibration/Mouse Clicks/MouseClicks" + i.ToString() + ".txt", mouseClicksStrings.ToArray());
+
+
+		// Generic data storage
+		// int
+		for (i = 0; i < data.GetIntVariables().Count; i++)
+		{
+			int j = 0;
+			do
+			{
+				if (!System.IO.File.Exists("./Data/Calibration/Generic/int/" + data.GetIntVariables()[i].GetVariableName() + j.ToString() + ".txt"))
+					break;
+				j++;
+			} while (true);
+
+			List<string> lines = new List<string>();
+			lines.Add(data.GetIntVariables()[i].GetValue().ToString());
+			System.IO.File.WriteAllLines("./Data/Calibration/Generic/int/" + data.GetIntVariables()[i].GetVariableName() + j.ToString() + ".txt", lines.ToArray());
+		}
+		// float
+		for (i = 0; i < data.GetFloatVariables().Count; i++)
+		{
+			int j = 0;
+			do
+			{
+				if (!System.IO.File.Exists("./Data/Calibration/Generic/float/" + data.GetFloatVariables()[i].GetVariableName() + j.ToString() + ".txt"))
+					break;
+				j++;
+			} while (true);
+
+			List<string> lines = new List<string>();
+			lines.Add(data.GetFloatVariables()[i].GetValue().ToString());
+			System.IO.File.WriteAllLines("./Data/Calibration/Generic/float/" + data.GetFloatVariables()[i].GetVariableName() + j.ToString() + ".txt", lines.ToArray());
+		}
 	}
 
 	private static string CalculateJitteringCount(UserData data)

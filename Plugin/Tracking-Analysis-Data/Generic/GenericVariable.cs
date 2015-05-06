@@ -40,6 +40,17 @@ public class GenericVariable<T> where T : struct
 			throw new Exception("Target null, check your GameObject name");
 	}
 
+	public GenericVariable(T value, string variableName)
+	{
+		// Initialization exception handling
+		if (!(value is float) && !(value is int))
+			throw new Exception("Type supported : int, float");
+		if (variableName == null)
+			throw new ArgumentNullException("Check your parameters");
+
+		this.value = value;
+	}
+
 	public void UpdateVariable()
 	{
 		try

@@ -8,7 +8,7 @@ public class GenericTracker : MonoBehaviour
 
 	private List<GenericVariable<int>> intVariables;
 	private List<GenericVariable<float>> floatVariables;
-	private bool analyseOn;
+	private bool analyseEnabled;
 
 	void Start () 
 	{
@@ -26,29 +26,32 @@ public class GenericTracker : MonoBehaviour
 				intVariables.Add(new GenericVariable<int>(0, genericVariables[i].VariableName, genericVariables[i].ClassName, genericVariables[i].GetMethodName));
 		}
 
-		analyseOn = true;
+		analyseEnabled = true;
 	}
 
 	void Update()
 	{
-		if (analyseOn)
+		if (analyseEnabled)
 		{
 			for (int i = 0; i < intVariables.Count; i++)
-			{
 				intVariables[i].UpdateVariable();
-				Debug.Log(intVariables[i].GetValue());
-			}
-
 			for (int i = 0; i < floatVariables.Count; i++)
-			{
 				floatVariables[i].UpdateVariable();
-				Debug.Log(floatVariables[i].GetValue());
-			}
 		}
 	}
 
 	public void SetAnalyse(bool a)
 	{
-		analyseOn = a;
+		analyseEnabled = a;
+	}
+
+	public List<GenericVariable<int>> GetIntVariables()
+	{
+		return intVariables;
+	}
+
+	public List<GenericVariable<float>> GetFloatVariables()
+	{
+		return floatVariables;
 	}
 }
