@@ -9,13 +9,8 @@ public class CBFixGUI : MonoBehaviour
     {
         NormalVision = 0,
         Protanopia = 1,
-        //Protanomaly = 2,
         Deuteranopia = 2,
-        //Deuteranomaly = 4,
         Tritanopia = 3,
-        //Tritanomaly = 6,
-        //Achromatopsia = 7,
-        //Achromanomaly = 8
     }    
     public ColorBlindnessType Type = ColorBlindnessType.NormalVision;
     public ColorBlindnessType updateType
@@ -37,10 +32,9 @@ public class CBFixGUI : MonoBehaviour
     private Button[] _BList;
     private bool firstRun;
     private Dictionary<Button, Color> _OriginalButtonColours;
-    private Text[] _TList;
+	private Text[] _TList;
     private Dictionary<Text, Color> _OriginalTextColours;
 
-	// Use this for initialization
 	void Start () 
     {
         _OriginalButtonColours = new Dictionary<Button, Color>();
@@ -76,12 +70,10 @@ public class CBFixGUI : MonoBehaviour
             FixTextColor(T);
     }
 
-
     private void FixButtonColor(Button B)
     {
         Color _originalcolour;
         Color _newcolour;
-
 
         switch (Type)
         {
@@ -179,16 +171,8 @@ public class CBFixGUI : MonoBehaviour
         }
     }
 	
-
-
-
-
-
-
-	// Update is called once per frame
-	void Update () 
-    {
-	    if(Input.GetKeyDown(KeyCode.G))
-            updateType = (ColorBlindnessType)(((int)updateType + 1) % 4);
+	public void UpdateColorBlindnessType()
+	{
+		updateType = (ColorBlindnessType)(((int)updateType + 1) % 4);
 	}
 }

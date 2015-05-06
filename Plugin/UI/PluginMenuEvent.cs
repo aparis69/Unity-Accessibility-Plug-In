@@ -7,6 +7,8 @@ public class PluginMenuEvent : MonoBehaviour
 	public Material contrastIntensityMaterial;
 	public GameObject[] menuButtons;
 	public Slider contrastSlider;
+	public Slider timeSlider;
+	public CBFixGUI CBscript;
 
 	// All cameras in the scene
 	private Camera[] cameras;
@@ -15,20 +17,14 @@ public class PluginMenuEvent : MonoBehaviour
 	private bool menuEnabled;
 	private bool flagMenuActivate;
 
-	public UnityEngine.UI.Slider timeSlider;
-
 	// Variables High contrast mode
 	private bool highContrastEnabled;
-
-	// Variables colorBlind
-	private bool colorBlindEnabled;
 
 	void Start()
 	{
 		menuEnabled = false;
 		flagMenuActivate = false;
 		highContrastEnabled = false;
-		colorBlindEnabled = false;
 
 		for (int i = 0; i < menuButtons.Length; i++)
 			menuButtons[i].SetActive(false);
@@ -104,18 +100,8 @@ public class PluginMenuEvent : MonoBehaviour
 	// Color blind option
 	public void ActiveColorblindUI()
 	{
-		if (menuEnabled && colorBlindEnabled)
-		{
-			// Desactivate color blind mode
-			colorBlindEnabled = false;
-
-		}
-		else if (menuEnabled && !colorBlindEnabled)
-		{
-			// Activate color blind mode
-			colorBlindEnabled = true;
-
-		}
+		if (menuEnabled)
+			CBscript.UpdateColorBlindnessType();
 	}
 
 
