@@ -15,6 +15,8 @@ public class PluginMenuEvent : MonoBehaviour
 	private bool menuEnabled;
 	private bool flagMenuActivate;
 
+	public UnityEngine.UI.Slider timeSlider;
+
 	// Variables High contrast mode
 	private bool highContrastEnabled;
 
@@ -62,7 +64,7 @@ public class PluginMenuEvent : MonoBehaviour
 		else
 		{
 			menuEnabled = true;
-		}
+	}
 	}
 
 
@@ -95,7 +97,7 @@ public class PluginMenuEvent : MonoBehaviour
 		{
 			for (int i = 0; i < cameras.Length; i++)
 				cameras[i].gameObject.GetComponent<ContrastIntensity>().SetIntensity(contrastSlider.value);
-		}
+	}
 	}
 
 
@@ -113,13 +115,13 @@ public class PluginMenuEvent : MonoBehaviour
 			// Activate color blind mode
 			colorBlindEnabled = true;
 
-		}
+	}
 	}
 
 
 	// Time regulation
 	public void RegulateTime()
 	{
-
+		Time.timeScale = timeSlider.value;
 	}
 }
