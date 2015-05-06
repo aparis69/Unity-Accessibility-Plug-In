@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PluginMenuEvent : MonoBehaviour 
 {
 	public Material contrastIntensityMaterial;
 	public GameObject[] menuButtons;
+	public Slider contrastSlider;
+
+	// All cameras in the scene
+	private Camera[] cameras;
 
 	// Variables menu activated/desactivated
 	private bool menuEnabled;
@@ -21,6 +26,8 @@ public class PluginMenuEvent : MonoBehaviour
 
 		for (int i = 0; i < menuButtons.Length; i++)
 			menuButtons[i].SetActive(false);
+
+		cameras = Camera.allCameras;
 	}
 
 	void Update()
@@ -35,6 +42,8 @@ public class PluginMenuEvent : MonoBehaviour
 		}
 	}
 
+
+	// Activation of the menu
 	public void ActiveAccessibilityMenu()
 	{
 		if (menuEnabled)
@@ -47,14 +56,17 @@ public class PluginMenuEvent : MonoBehaviour
 				menuButtons[i].SetActive(false);
 		}
 		else
+		{
 			menuEnabled = true;
+		}
 	}
 
+
+	// Contrast option
 	public void ActiveHighContrastMode()
 	{
 		if (menuEnabled)
 		{
-			Camera[] cameras = Camera.allCameras;
 			if (highContrastEnabled)
 			{
 				for (int i = 0; i < cameras.Length; i++)
@@ -66,18 +78,31 @@ public class PluginMenuEvent : MonoBehaviour
 				for (int i = 0; i < cameras.Length; i++)
 				{
 					cameras[i].gameObject.AddComponent<ContrastIntensity>();
-					cameras[i].gameObject.GetComponent<ContrastIntensity>().contrastMaterial = contrastIntensityMaterial;
+					cameras[i].gameObject.GetComponent<ContrastIntensity>().SetMaterial(contrastIntensityMaterial);
 				}
 				highContrastEnabled = true;
 			}
 		}
 	}
 
+	public void ContrastOnValueChanged()
+	{
+		if (menuEnabled && highContrastEnabled)
+		{
+			for (int i = 0; i < cameras.Length; i++)
+				cameras[i].gameObject.GetComponent<ContrastIntensity>().SetIntensity(contrastSlider.value);
+		}
+	}
+
+
+	// Color blind option
 	public void ActiveColorblindUI()
 	{
 
 	}
 
+
+	// Time regulation
 	public void RegulateTime()
 	{
 
