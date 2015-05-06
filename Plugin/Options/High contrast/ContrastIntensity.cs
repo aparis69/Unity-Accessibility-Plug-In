@@ -3,9 +3,9 @@ using UnityEngine;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(Camera))]
-class ContrastIntensity
+class ContrastIntensity : MonoBehaviour
 {
-	public float intensity = 0.5f;
+	public float intensity = 3f;
 	public Material contrastMaterial;
 
 	void OnRenderImage(RenderTexture source, RenderTexture destination)
@@ -14,4 +14,3 @@ class ContrastIntensity
 		Graphics.Blit(source, destination, contrastMaterial);
 	}
 }
-

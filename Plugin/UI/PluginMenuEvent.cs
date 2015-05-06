@@ -3,15 +3,21 @@ using System.Collections;
 
 public class PluginMenuEvent : MonoBehaviour 
 {
+	public Material contrastIntensityMaterial;
 	public GameObject[] menuButtons;
 
+	// Variables menu activated/desactivated
 	private bool menuEnabled;
 	private bool flagMenuActivate;
+
+	// Variables High contrast mode
+	private bool highContrastEnabled;
 
 	void Start()
 	{
 		menuEnabled = false;
 		flagMenuActivate = false;
+		highContrastEnabled = false;
 
 		for (int i = 0; i < menuButtons.Length; i++)
 			menuButtons[i].SetActive(false);
@@ -46,7 +52,25 @@ public class PluginMenuEvent : MonoBehaviour
 
 	public void ActiveHighContrastMode()
 	{
-
+		if (menuEnabled)
+		{
+			Camera[] cameras = Camera.allCameras;
+			if (highContrastEnabled)
+			{
+				for (int i = 0; i < cameras.Length; i++)
+					GameObject.Destroy(cameras[i].gameObject.GetComponent<ContrastIntensity>());
+				highContrastEnabled = false;
+			}
+			else
+			{
+				for (int i = 0; i < cameras.Length; i++)
+				{
+					cameras[i].gameObject.AddComponent<ContrastIntensity>();
+					cameras[i].gameObject.GetComponent<ContrastIntensity>().contrastMaterial = contrastIntensityMaterial;
+				}
+				highContrastEnabled = true;
+			}
+		}
 	}
 
 	public void ActiveColorblindUI()
