@@ -18,11 +18,15 @@ public class PluginMenuEvent : MonoBehaviour
 	// Variables High contrast mode
 	private bool highContrastEnabled;
 
+	// Variables colorBlind
+	private bool colorBlindEnabled;
+
 	void Start()
 	{
 		menuEnabled = false;
 		flagMenuActivate = false;
 		highContrastEnabled = false;
+		colorBlindEnabled = false;
 
 		for (int i = 0; i < menuButtons.Length; i++)
 			menuButtons[i].SetActive(false);
@@ -98,7 +102,18 @@ public class PluginMenuEvent : MonoBehaviour
 	// Color blind option
 	public void ActiveColorblindUI()
 	{
+		if (menuEnabled && colorBlindEnabled)
+		{
+			// Desactivate color blind mode
+			colorBlindEnabled = false;
 
+		}
+		else if (menuEnabled && !colorBlindEnabled)
+		{
+			// Activate color blind mode
+			colorBlindEnabled = true;
+
+		}
 	}
 
 
