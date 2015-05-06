@@ -8,6 +8,8 @@ public class PluginMenuEvent : MonoBehaviour
 	private bool menuEnabled;
 	private bool flagMenuActivate;
 
+	public UnityEngine.UI.Slider timeSlider;
+
 	void Start()
 	{
 		menuEnabled = false;
@@ -56,6 +58,6 @@ public class PluginMenuEvent : MonoBehaviour
 
 	public void RegulateTime()
 	{
-
+		Time.timeScale = timeSlider.value;
 	}
 }
