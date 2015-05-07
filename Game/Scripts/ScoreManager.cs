@@ -4,6 +4,7 @@ using System.Collections;
 public class ScoreManager : MonoBehaviour 
 {
 	private int currentScore;
+	public int score;
 
 	void Start () 
 	{
@@ -20,6 +21,6 @@ public class ScoreManager : MonoBehaviour
 
 	public int GetScore()
 	{
-		return currentScore;
+		return score;
 	}
 }

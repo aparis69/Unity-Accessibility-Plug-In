@@ -9,7 +9,7 @@ public class GenericAnalyser
 		for (int i = 0; i < calibrateData.GetIntVariables().Count; i++)
 		{
 			if (Mathf.Abs(calibrateData.GetIntVariables()[i].GetValue() - playerData.GetIntVariables()[i].GetValue()) > 4)
-				Debug.Log("The player might have a problem concerning " + calibrateData.GetIntVariables()[i].GetVariableName());
+				Debug.Log("The player might have a problem concerning " + playerData.GetIntVariables()[i].GetVariableName() + " which is " + playerData.GetIntVariables()[i].GetValue());
 		}
 
 		// Float variables
