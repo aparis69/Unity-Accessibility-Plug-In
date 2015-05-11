@@ -4,10 +4,15 @@ using System.Collections;
 
 public class PluginMenuEvent : MonoBehaviour
 {
-	public Material contrastIntensityMaterial;
+	// All menu objects	
 	public GameObject[] menuButtons;
-	public Slider contrastSlider;
+
+	// Variables Sound Management
+
+	// Variable time management
 	public Slider timeSlider;
+
+	// Variable Colorblind
 	public CBFixGUI CBscript;
 
 	// All cameras in the scene
@@ -18,6 +23,8 @@ public class PluginMenuEvent : MonoBehaviour
 	private bool flagMenuActivate;
 
 	// Variables High contrast mode
+	public Material contrastIntensityMaterial;
+	public Slider contrastSlider;
 	private bool highContrastEnabled;
 
 	void Start()
@@ -109,5 +116,12 @@ public class PluginMenuEvent : MonoBehaviour
 	public void RegulateTime()
 	{
 		Time.timeScale = timeSlider.value;
+	}
+
+
+	// Sound Management option
+	public void ShowSoundManagementInterface()
+	{
+
 	}
 }
