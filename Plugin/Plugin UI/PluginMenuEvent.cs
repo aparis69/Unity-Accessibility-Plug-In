@@ -8,6 +8,7 @@ public class PluginMenuEvent : MonoBehaviour
 	public GameObject[] menuButtons;
 
 	// Variables Sound Management
+	public PluginSoundManager soundManager;
 
 	// Variable time management
 	public Slider timeSlider;
@@ -122,6 +123,6 @@ public class PluginMenuEvent : MonoBehaviour
 	// Sound Management option
 	public void ShowSoundManagementInterface()
 	{
-
+		soundManager.SwitchDisplay();
 	}
 }
