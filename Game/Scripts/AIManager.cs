@@ -20,26 +20,27 @@ public class AIManager : MonoBehaviour
 	
 	void Update () 
 	{
-		if(Input.GetKeyDown(KeyCode.P))
+	}
+
+	public void ManageAI()
+	{
+		if (!AIenabled)
 		{
-			if (!AIenabled)
-			{
-				for (int i = 0; i < AI.Length; i++)
-					AI[i].GetComponent<AIController>().ActivateAI();
-				AIenabled = true;
+			for (int i = 0; i < AI.Length; i++)
+				AI[i].GetComponent<AIController>().ActivateAI();
+			AIenabled = true;
 
-				for (int i = 0; i < scaredAI.Length; i++)
-					scaredAI[i].SetActive(true);
-			}
-			else
-			{
-				for (int i = 0; i < AI.Length; i++)
-					AI[i].GetComponent<AIController>().DesactiveAI();
-				AIenabled = false;
+			for (int i = 0; i < scaredAI.Length; i++)
+				scaredAI[i].SetActive(true);
+		}
+		else
+		{
+			for (int i = 0; i < AI.Length; i++)
+				AI[i].GetComponent<AIController>().DesactiveAI();
+			AIenabled = false;
 
-				for (int i = 0; i < scaredAI.Length; i++)
-					scaredAI[i].SetActive(false);
-			}
+			for (int i = 0; i < scaredAI.Length; i++)
+				scaredAI[i].SetActive(false);
 		}
 	}
 }

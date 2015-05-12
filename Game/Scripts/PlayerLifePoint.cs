@@ -3,11 +3,12 @@ using System.Collections;
 
 public class PlayerLifePoint : MonoBehaviour
 {
-	private int numberOfPoint = 100;
+	private Vector3 startingPosition;
+	private int numberOfPoint = 1000;
 
 	void Start()
 	{
-
+		startingPosition = this.transform.position;
 	}
 
 	void Update()
@@ -17,7 +18,13 @@ public class PlayerLifePoint : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		Debug.Log(other.gameObject.tag);
+		// If the player has a contact with a fire, he looses lifepoint
+		if (other.gameObject.CompareTag("Fire"))
+			numberOfPoint -= 2;
+	}
+
+	void OnTriggerStay(Collider other)
+	{
 		// If the player has a contact with a fire, he looses lifepoint
 		if (other.gameObject.CompareTag("Fire"))
 			numberOfPoint -= 1;
@@ -26,5 +33,15 @@ public class PlayerLifePoint : MonoBehaviour
 	public int GetLifePoint()
 	{
 		return numberOfPoint;
+	}
+
+	public void ResetLifePoint()
+	{
+		numberOfPoint = 100;
+	}
+
+	public void RespawnToStartingPoint()
+	{
+		this.transform.position = startingPosition;
 	}
 }
