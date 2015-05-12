@@ -29,10 +29,18 @@ public class CBFixGUI : MonoBehaviour
         }
     }
 
-    private Button[] _BList;
+    public enum ButtonColourType
+    {
+        Button = 0,
+        Image = 1,
+    }
+    public ButtonColourType ButtonType = ButtonColourType.Button;
+
     private bool firstRun;
+    private List<Canvas> _CList;
+    private List<Button> _BList;
+    private List<Text> _TList;
     private Dictionary<Button, Color> _OriginalButtonColours;
-	private Text[] _TList;
     private Dictionary<Text, Color> _OriginalTextColours;
 
 	void Start () 
@@ -46,16 +54,35 @@ public class CBFixGUI : MonoBehaviour
 
     private void ApplyFix()
     {
-        if(_BList == null)
-            _BList = (Button[])FindObjectsOfType(typeof(Button));
+        if (_CList == null)
+        {
+            _CList = new List<Canvas>();
+            _CList.AddRange((Canvas[])FindObjectsOfType(typeof(Canvas)));
+        }
+
+        if (_BList == null)
+        {
+            _BList = new List<Button>();
+            foreach (Canvas C in _CList)
+                _BList.AddRange(C.GetComponentsInChildren<Button>(true));
+        }
+            
 
         if(_TList == null)
-            _TList = (Text[])FindObjectsOfType(typeof(Text));
-
+        {
+            _TList = new List<Text>();
+            foreach (Button B in _BList)
+                _TList.AddRange(B.GetComponentsInChildren<Text>(true));
+        }
+            
         if(firstRun == false)
         {
-            foreach (Button B in _BList)            
-                _OriginalButtonColours.Add(B, B.image.color); 
+            if (ButtonType == ButtonColourType.Button)
+                foreach (Button B in _BList)
+                    _OriginalButtonColours.Add(B, B.colors.normalColor);
+            else
+                foreach (Button B in _BList)
+                    _OriginalButtonColours.Add(B, B.image.color);
             
             foreach (Text T in _TList)
                 _OriginalTextColours.Add(T, T.color);
@@ -80,42 +107,77 @@ public class CBFixGUI : MonoBehaviour
             default:
             case ColorBlindnessType.NormalVision:
                 _OriginalButtonColours.TryGetValue(B, out _newcolour);
-                B.image.color = _newcolour;
+                if (ButtonType == ButtonColourType.Button)
+                {
+                    ColorBlock CBlock;
+                    CBlock = B.colors;
+                    CBlock.normalColor = _newcolour;
+                    B.colors = CBlock;                    
+                }                    
+                else
+                    B.image.color = _newcolour;
+
                 break;
             case ColorBlindnessType.Protanopia:
                 _OriginalButtonColours.TryGetValue(B, out _originalcolour);
 
                 if (_originalcolour.r >= 0.784f && (_originalcolour.b >= 0.0f && _originalcolour.b <= 0.235f) && (_originalcolour.g >= 0.0f && _originalcolour.g <= 0.274f))
-                {
                     _newcolour = new Color(0.004f, 0.427f, 1.0f, _originalcolour.a);                    
-                    B.image.color = _newcolour;
-                }
+                
                 else if ((_originalcolour.r >= 225/255f && _originalcolour.b <= 1.0f) && (_originalcolour.b >= 1/255f && _originalcolour.b <= 25/255f) && (_originalcolour.g >= 225/255f && _originalcolour.g <= 1.0f))
-                {
-                    _newcolour = new Color(125/255f, 125/255f, 125/255f, _originalcolour.a);
+                    _newcolour = new Color(125/255f, 125/255f, 125/255f, _originalcolour.a);             
                     
-                    B.image.color = _newcolour;
+                else
+                    _newcolour = _originalcolour;
+                
+                if (ButtonType == ButtonColourType.Button)
+                {
+                    ColorBlock CBlock;
+                    CBlock = B.colors;
+                    CBlock.normalColor = _newcolour;
+                    B.colors = CBlock;
                 }
                 else
-                {
-                    break;
-                }
+                    B.image.color = _newcolour;
+
                 break;
             case ColorBlindnessType.Deuteranopia:
                  _OriginalButtonColours.TryGetValue(B, out _originalcolour);
                  if ((_originalcolour.r >= 225/255f && _originalcolour.r <= 1.0f) && (_originalcolour.b >= 100/255f && _originalcolour.b <= 155/255f) && (_originalcolour.g >= 0.0f && _originalcolour.g <= 30/255f))
-                {
                     _newcolour = new Color(0.004f, 0.427f, 1.0f, _originalcolour.a);
+
+                 else
+                     _newcolour = _originalcolour;
+
+                if (ButtonType == ButtonColourType.Button)
+                {
+                    ColorBlock CBlock;
+                    CBlock = B.colors;
+                    CBlock.normalColor = _newcolour;
+                    B.colors = CBlock;
+                }
+                else
                     B.image.color = _newcolour;
-                }                
+
                 break;
             case ColorBlindnessType.Tritanopia:
                 _OriginalButtonColours.TryGetValue(B, out _originalcolour);
                  if ((_originalcolour.r >= 225/255f && _originalcolour.r <= 1.0f) && (_originalcolour.b >= 225/255f && _originalcolour.b <= 1.0f) && (_originalcolour.g >= 0.0f && _originalcolour.g <= 120/255f))
-                {
                     _newcolour = new Color(221/255f, 237/255f, 239/255f, _originalcolour.a);
+
+                 else
+                     _newcolour = _originalcolour;
+
+                 if (ButtonType == ButtonColourType.Button)
+                 {
+                    ColorBlock CBlock;
+                    CBlock = B.colors;
+                    CBlock.normalColor = _newcolour;
+                    B.colors = CBlock;                    
+                 }                    
+                else
                     B.image.color = _newcolour;
-                }     
+     
                 break;
         } 
     }
