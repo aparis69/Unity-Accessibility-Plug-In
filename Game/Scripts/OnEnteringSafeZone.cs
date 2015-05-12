@@ -26,8 +26,6 @@ public class OnEnteringSafeZone : MonoBehaviour
             PlayerPrefs.SetInt("Game off", 1);
 			scoreManager.SetScore(other.gameObject.GetComponentInChildren<GrabPeople>().GetNumberOfPeople());
             other.gameObject.GetComponent<FirstPersonController>().enabled = false;
-
-			Debug.Log(scoreManager.GetScore());
         }
 		// if AI : destroy it
 		if (other.gameObject.CompareTag("AI"))

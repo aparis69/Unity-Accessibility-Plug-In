@@ -36,6 +36,17 @@ public class GrabPeople : MonoBehaviour
 		}
 	}
 
+	void OnTriggerStay(Collider other)
+	{
+		// If the player wants to grab an AI Controller
+		if (other.gameObject.tag == "Scared AI" && grabModeEnabled)
+		{
+			// We add it into his "inventory" and hide him and in the game
+			AIInventory.Add(other.gameObject);
+			other.gameObject.SetActive(false);
+		}
+	}
+
 	public int GetNumberOfPeople()
 	{
 		return AIInventory.Count;

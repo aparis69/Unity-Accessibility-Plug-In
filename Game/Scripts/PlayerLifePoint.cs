@@ -5,10 +5,13 @@ public class PlayerLifePoint : MonoBehaviour
 {
 	private Vector3 startingPosition;
 	private int numberOfPoint = 1000;
+	private int initialNumberOfPoint;
+	private int numberOfLoose = 0;
 
 	void Start()
 	{
 		startingPosition = this.transform.position;
+		initialNumberOfPoint = numberOfPoint;
 	}
 
 	void Update()
@@ -37,11 +40,17 @@ public class PlayerLifePoint : MonoBehaviour
 
 	public void ResetLifePoint()
 	{
-		numberOfPoint = 100;
+		numberOfPoint = initialNumberOfPoint;
 	}
 
 	public void RespawnToStartingPoint()
 	{
 		this.transform.position = startingPosition;
+		numberOfLoose++;
+	}
+
+	public int GetNumberOfLoose()
+	{
+		return numberOfLoose;
 	}
 }
