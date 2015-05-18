@@ -3,27 +3,25 @@ using System.Collections;
 
 public class PluginSoundManager : MonoBehaviour 
 {
-	public Transform cameraTransform;
-
 	public UnityEngine.UI.Text subtitleArea;
 	public GameObject[] UIObjects;
 
-	public AudioSource[] audioSources;
-	public bool canShowInterface;
+	private Transform cameraTransform;
+	private AudioSource[] audioSources;
+	private bool canShowInterface;
 
 	void Start () 
 	{
 		// Get all the audio source in the scene
 		audioSources = (AudioSource[])GameObject.FindObjectsOfType(typeof(AudioSource));
+		// Get the main camera in the scene
+		cameraTransform = Camera.main.transform;
 
 		// hide the sound manager interface
 		for (int i = 0; i < UIObjects.Length; i++)
 			UIObjects[i].SetActive(false);
-
 		canShowInterface = false;
-
 	}
-
 
 	void Update () 
 	{
@@ -41,8 +39,15 @@ public class PluginSoundManager : MonoBehaviour
 			
 	}
 
+	public void SwitchDisplay()
+	{
+		if (canShowInterface == true)
+			HideInterface();
+		else
+			ShowInterface();
+	}
 
-	public string GetSoundDirection(Vector3 soundPosition) 
+	private string GetSoundDirection(Vector3 soundPosition) 
 	{
 		Vector3 camToSound = soundPosition - cameraTransform.position;
 
@@ -63,24 +68,13 @@ public class PluginSoundManager : MonoBehaviour
 		return "";
 	}
 
-	public string GetSoundDistance(Vector3 soundPosition)
+	private string GetSoundDistance(Vector3 soundPosition)
 	{
 		int distance = Mathf.RoundToInt(Vector3.Distance(cameraTransform.position, soundPosition));
 		return distance.ToString() + " meters away";
 	}
 
-
-
-	public void SwitchDisplay() 
-	{
-		if (canShowInterface == true)
-			HideInterface();
-		else
-			ShowInterface();
-	}
-
-
-	public void ShowInterface()
+	private void ShowInterface()
 	{
 		for (int i = 0; i < UIObjects.Length; i++)
 			UIObjects[i].SetActive(true);
@@ -88,12 +82,7 @@ public class PluginSoundManager : MonoBehaviour
 		canShowInterface = true;
 	}
 
-	private void InitializeComponent()
-	{
-
-	}
-
-	public void HideInterface()
+	private void HideInterface()
 	{
 		canShowInterface = false;
 		for (int i = 0; i < UIObjects.Length; i++)
