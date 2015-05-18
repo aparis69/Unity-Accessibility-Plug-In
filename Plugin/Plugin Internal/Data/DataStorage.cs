@@ -24,7 +24,6 @@ public class DataStorage : MonoBehaviour
 		for (int i = 0; i < numberOfFile; i++)
 		{
 			UserData user = new UserData();
-			List<KeyInput> keys = new List<KeyInput>();
 			string[] lines = System.IO.File.ReadAllLines("./Data/Calibration/Keyboard Inputs/Keyboard" + i.ToString() + ".txt");
 
 			foreach (string line in lines)

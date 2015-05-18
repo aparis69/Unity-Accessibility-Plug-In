@@ -8,6 +8,7 @@ public class GenericVariable<T> where T : struct
 	private string variableName;
 	private string className;
 	private string getMethodName;
+	private string setMethodName;
 	private T value;
 
 	// Plug in necessary variables
@@ -19,10 +20,11 @@ public class GenericVariable<T> where T : struct
 	{
 	}
 
-	public GenericVariable(T initialValue, string variableName, string className, string methodName)
+	public GenericVariable(T initialValue, string variableName, string className, string methodName, string setMethodName)
 	{
 		// Initialization exception handling
-		if (!(initialValue is float) && !(initialValue is int))
+		Type t = initialValue.GetType();
+		if (!(t == typeof(float)) && !(t == typeof(int)))
 			throw new Exception("Type supported : int, float");
 		if (variableName == null || className == null || methodName == null)
 			throw new ArgumentNullException("Check your parameters");
@@ -31,6 +33,7 @@ public class GenericVariable<T> where T : struct
 		this.className = className;
 		this.getMethodName = methodName;
 		this.value = initialValue;
+		this.setMethodName = setMethodName;
 
 		type = Type.GetType(className);
 		gameObject = GameObject.FindObjectOfType(type);
@@ -42,8 +45,8 @@ public class GenericVariable<T> where T : struct
 
 	public GenericVariable(T value, string variableName)
 	{
-		// Initialization exception handling
-		if (!(value is float) && !(value is int))
+		Type t = value.GetType();
+		if (!(t == typeof(float)) && !(t == typeof(int)))
 			throw new Exception("Type supported : int, float");
 		if (variableName == null)
 			throw new ArgumentNullException("Check your parameters");
@@ -95,5 +98,15 @@ public class GenericVariable<T> where T : struct
 	public T GetValue()
 	{
 		return value;
+	}
+
+	public string GetClassName()
+	{
+		return className;
+	}
+
+	public string SetMethod()
+	{
+		return setMethodName;
 	}
 }

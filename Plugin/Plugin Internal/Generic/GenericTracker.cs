@@ -21,9 +21,9 @@ public class GenericTracker : MonoBehaviour
 		for (int i = 0; i < genericVariables.Count; i++)
 		{
 			if(genericVariables[i].type == SupportedType.FLOAT)
-				floatVariables.Add(new GenericVariable<float>(0f, genericVariables[i].VariableName, genericVariables[i].ClassName, genericVariables[i].GetMethodName));
+				floatVariables.Add(new GenericVariable<float>(0f, genericVariables[i].VariableName, genericVariables[i].ClassName, genericVariables[i].GetMethodName, genericVariables[i].SetMethodName));
 			if (genericVariables[i].type == SupportedType.INT)
-				intVariables.Add(new GenericVariable<int>(0, genericVariables[i].VariableName, genericVariables[i].ClassName, genericVariables[i].GetMethodName));
+				intVariables.Add(new GenericVariable<int>(0, genericVariables[i].VariableName, genericVariables[i].ClassName, genericVariables[i].GetMethodName, genericVariables[i].SetMethodName));
 		}
 
 		analyseEnabled = true;

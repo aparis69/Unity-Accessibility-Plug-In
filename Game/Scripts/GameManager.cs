@@ -1,37 +1,79 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.Characters.FirstPerson;
 
-public class GameManager : MonoBehaviour 
+public class GameManager : MonoBehaviour
 {
 	public AIManager aiManager;
 	public GameObject player;
-	private GameObject[] fireObjects;
+	public GameObject[] typingUIObjects;
+	public float calmPhaseDuration;
+	public AudioClip officeSounds;
+	public AudioClip alarmSound;
 
-	void Start () 
+	private GameObject[] fireObjects;
+	private bool gameIsOn;
+	private bool firstPass;
+	private float timerCalmPhase;
+
+	void Start()
 	{
 		fireObjects = GameObject.FindGameObjectsWithTag("Fire");
 		for (int i = 0; i < fireObjects.Length; i++)
 			fireObjects[i].SetActive(false);
+
+		// At first, the player will have to type some words on his keyboard
+		gameIsOn = false;
+		firstPass = false;
+		timerCalmPhase = Time.realtimeSinceStartup + calmPhaseDuration;
+
+		for (int i = 0; i < typingUIObjects.Length; i++)
+			typingUIObjects[i].SetActive(true);
+
+		this.GetComponent<AudioSource>().clip = officeSounds;
+		this.GetComponent<AudioSource>().Play();
 	}
 
-	void Update() 
+	void Update()
 	{
-		// Check the player lifepoint
-		if (player.GetComponent<PlayerLifePoint>().GetLifePoint() <= 0)
+		// Calm phase
+		if (!gameIsOn)
 		{
-			// Respawn the player to the starting point with 100 points
-			player.GetComponent<PlayerLifePoint>().ResetLifePoint();
-			player.GetComponent<PlayerLifePoint>().RespawnToStartingPoint();
+			// Activate the game at the end of the calm phase timer
+			if (Time.realtimeSinceStartup - timerCalmPhase > 0f)
+			{
+				gameIsOn = true;
+				firstPass = true;
+				this.GetComponent<AudioSource>().clip = alarmSound;
+				this.GetComponent<AudioSource>().Play();
+				for (int i = 0; i < typingUIObjects.Length; i++)
+					typingUIObjects[i].SetActive(false);
+			}
 		}
-
-		if (Input.GetKeyDown(KeyCode.P))
+		// Game phase
+		else
 		{
-			// Activate fire
-			for (int i = 0; i < fireObjects.Length; i++)
-				fireObjects[i].SetActive(true);
+			// First pass, trigger the game events
+			if (firstPass)
+			{
+				// Activate fire
+				for (int i = 0; i < fireObjects.Length; i++)
+					fireObjects[i].SetActive(true);
+				// Activate AI and scared AI
+				aiManager.ManageAI();
+				// Activate the player controller script
+				player.GetComponent<FirstPersonController>().ActivateGame();
 
-			// Activate AI and scared AI
-			aiManager.ManageAI();
+				firstPass = false;
+			}
+
+			// Check the player lifepoint during all game phase
+			if (player.GetComponent<PlayerLifePoint>().GetLifePoint() <= 0)
+			{
+				// Respawn the player to the starting point with 1000 points
+				player.GetComponent<PlayerLifePoint>().ResetLifePoint();
+				player.GetComponent<PlayerLifePoint>().RespawnToStartingPoint();
+			}
 		}
 	}
 }

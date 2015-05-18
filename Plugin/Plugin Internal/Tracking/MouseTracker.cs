@@ -5,21 +5,12 @@ using System.Collections.Generic;
 
 public class MouseTracker : MonoBehaviour
 {
-    private List<Vector2> mousePointerPosition;
-    private List<string> mouseButtonClicks;
-    private List<int> mouseClickCount;
-
     private MouseKeyInput left, right, middle;
-
     private MouseInput _MouseInput;
-
 	private bool analyseEnabled;
-
+	
     void Start()
     {
-        mousePointerPosition = new List<Vector2>();
-        mouseButtonClicks = new List<string>();
-        mouseClickCount = new List<int>();
 		_MouseInput = new MouseInput();
 
         left = new MouseKeyInput("Left Button");

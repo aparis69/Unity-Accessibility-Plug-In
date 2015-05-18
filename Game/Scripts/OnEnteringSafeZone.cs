@@ -5,6 +5,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class OnEnteringSafeZone : MonoBehaviour 
 {
 	private ScoreManager scoreManager;
+	public GameObject gameManagerObject;
 
 	void Start ()
     {
@@ -24,6 +25,8 @@ public class OnEnteringSafeZone : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             PlayerPrefs.SetInt("Game off", 1);
+			gameManagerObject.SetActive(false);
+			gameManagerObject.GetComponent<AudioSource>().Stop();
 			scoreManager.SetScore(other.gameObject.GetComponentInChildren<GrabPeople>().GetNumberOfPeople());
             other.gameObject.GetComponent<FirstPersonController>().enabled = false;
         }
