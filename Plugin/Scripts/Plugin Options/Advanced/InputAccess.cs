@@ -18,9 +18,17 @@ public class InputAccess
 				float timing = map[key];
 				if (Time.realtimeSinceStartup - timing > 0.5f)
 					return false;
+				else
+				{
+					map[key] = Time.realtimeSinceStartup;
+					return Input.GetKeyDown(key);
+				}
 			}
-
-			return Input.GetKeyDown(key);
+			else
+			{
+				map.Add(key, Time.realtimeSinceStartup);
+				return Input.GetKeyDown(key);
+			}
 		}
 		else
 		{
