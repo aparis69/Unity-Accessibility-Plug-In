@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 			typingUIObjects[i].SetActive(true);
 
 		this.GetComponent<AudioSource>().clip = officeSounds;
-		this.GetComponent<AudioSource>().Play();
+		this.GetComponent<AudioSourceAccess>().PlayAmbient();
 	}
 
 	void Update()
@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 				gameIsOn = true;
 				firstPass = true;
 				this.GetComponent<AudioSource>().clip = alarmSound;
-				this.GetComponent<AudioSource>().Play();
+				this.GetComponent<AudioSourceAccess>().PlayAmbient();
 				for (int i = 0; i < typingUIObjects.Length; i++)
 					typingUIObjects[i].SetActive(false);
 			}

@@ -1,47 +1,113 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class SubtitleManagement : MonoBehaviour 
 {
-	[HideInInspector]
 	public Text subtitleArea;
-	[HideInInspector]
 	public GameObject[] UIObjects;
 
 	private Transform cameraTransform;
-	private AudioSource[] audioSources;
-	private bool canShowInterface;
+	private bool showingSubtitle;
+
+	private List<string> subList = new List<string>();
+	private List<string> ambientSubList = new List<string>();
+	private float timer;
+	public float subtitleLifeSpan = 1.0f;
 
 	void Start () 
 	{
-		// Get all the audio source in the scene
-		audioSources = (AudioSource[])GameObject.FindObjectsOfType(typeof(AudioSource));
 		// Get the main camera in the scene
 		cameraTransform = Camera.main.transform;
 
 		// hide the sound manager interface
 		for (int i = 0; i < UIObjects.Length; i++)
 			UIObjects[i].SetActive(false);
-		canShowInterface = false;
+
+		showingSubtitle = false;
+
+		timer = subtitleLifeSpan;
 	}
 
 	void Update () 
 	{
-		if (canShowInterface == true) 
+		if (timer > 0.0f)
 		{
-			subtitleArea.text = "";
-			for (int i = 0; i < audioSources.Length; i++)
+			timer -= Time.deltaTime;
+		}
+		else 
+		{
+			if (subList.Count > 0) 
 			{
-				if (audioSources[i].enabled == true && audioSources[i].isPlaying == true)
-					subtitleArea.text = audioSources[i].clip.name + " sound, " + GetSoundDirection(Vector3.zero) + ", " + GetSoundDistance(Vector3.zero);
-			}
-		}		
+				subList.RemoveAt(0);
+				UpdateText();
+				timer = subtitleLifeSpan;
+			}			
+		}
 	}
+
+	public void AddSubtitle(AudioSource source) 
+	{
+		if (Vector3.Distance(cameraTransform.position, source.transform.position) < 1.5f)
+		{
+			subList.Add(source.clip.name + " sound, right on you" + "\n");
+		}
+		else 
+		{
+			subList.Add(source.clip.name + " sound, " + GetSoundDirection(source.transform.position) + ", " + GetSoundDistance(source.transform.position) + "\n");
+		}
+		
+		if (subList.Count > 2) 
+		{
+			subList.RemoveAt(0);
+		}
+		
+		UpdateText();
+		
+		if (timer <= 0.0f) 
+		{
+			timer = subtitleLifeSpan;
+		}
+	}
+
+	public void AddAmbientSubtitle(AudioSource source)
+	{
+		ambientSubList.Add("(Ambient) " + source.clip.name + " sound");
+
+		UpdateText();
+
+		if (timer <= 0.0f)
+		{
+			timer = subtitleLifeSpan;
+		}
+	}
+
+	public void UpdateText() 
+	{
+		subtitleArea.text = "";
+
+		if (subList.Count == 0)
+		{
+			for (int i = 0; i < ambientSubList.Count; i++)
+			{
+				subtitleArea.text += ambientSubList[i];
+			}
+		}
+		else 
+		{
+			for (int i = 0; i < subList.Count; i++)
+			{
+				subtitleArea.text += subList[i];
+			}
+		}
+		
+	}
+
 
 	public void SwitchDisplay()
 	{
-		if (canShowInterface)
+		if (showingSubtitle)
 			HideInterface();
 		else
 			ShowInterface();
@@ -79,13 +145,19 @@ public class SubtitleManagement : MonoBehaviour
 		for (int i = 0; i < UIObjects.Length; i++)
 			UIObjects[i].SetActive(true);
 
-		canShowInterface = true;
+		showingSubtitle = true;
 	}
 
 	private void HideInterface()
 	{
-		canShowInterface = false;
+		showingSubtitle = false;
 		for (int i = 0; i < UIObjects.Length; i++)
 			UIObjects[i].SetActive(false);
 	}
+
+	public bool IsShowingSubtitle() 
+	{
+		return showingSubtitle;
+	}
+
 }

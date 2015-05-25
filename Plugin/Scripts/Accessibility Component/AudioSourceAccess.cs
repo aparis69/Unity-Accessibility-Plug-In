@@ -1,19 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class AudioSourceAccess : MonoBehaviour 
 {
-	public AudioClip clip;
-	private AudioSource source;
-
-	// State variable
-	private bool isPlaying;
+	public AudioSource source;
+	private SubtitleManagement subManager;
 
 	void Start ()
 	{
-		source = new AudioSource();
-		source.clip = clip;
-		isPlaying = false;
+		source = this.GetComponent<AudioSource>();
+		subManager = FindObjectOfType<SubtitleManagement>();
 	}
 
 
@@ -21,17 +18,40 @@ public class AudioSourceAccess : MonoBehaviour
 	public void Play()
 	{
 		source.Play();
-		isPlaying = true;
+		if (subManager.IsShowingSubtitle() == true) 
+		{
+			subManager.AddSubtitle(source);
+		}
+	}
+	public void PlayAmbient()
+	{
+		source.Play();
+		if (subManager.IsShowingSubtitle() == true)
+		{
+			subManager.AddAmbientSubtitle(source);
+		}
+	}
+
+	public void PlayOneShot(AudioClip clip)
+	{
+		source.PlayOneShot(clip);
+		if (subManager.IsShowingSubtitle() == true)
+		{
+			subManager.AddSubtitle(source);
+		}
 	}
 
 	public void Stop()
 	{
 		source.Stop();
-		isPlaying = false;
+		if (subManager.IsShowingSubtitle() == true)
+		{
+
+		}
 	}
 
 	public bool IsPlaying()
 	{
-		return isPlaying;
+		return source.isPlaying;
 	}
 }
