@@ -22,7 +22,7 @@ public class KeyboardAnalyser
 		{
 			KeyInput key = dataResult.GetKeyboardInput().GetKeyInput()[i];
 
-			if (key.GetDoubleStrikingCount() >= 5)
+			if (key.GetDoubleStrikingCount() >= 5 && InputAccess.DoubleStrikingOptionEnabled() == false)
 				Debug.Log("Player had trouble using the keyboard correctly. Unusual double striking was detected on the key : " + key.GetKeyCode());
 			if (key.GetHitCount() >= 5)
 				Debug.Log("Player had trouble using the keyboard correctly. Unusual hit count was detected on the key : " + key.GetKeyCode());

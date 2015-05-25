@@ -13,7 +13,7 @@ public class MouseAnalyser
 	{
 		int c2 = CountQuickMouseDirectionChanges(playerData.GetMouseInput().getMousePointerPosition());
 
-		if (c2 > calibrateData.GetMouseInput().GetJitteringCount() * 5)
+		if (c2 > calibrateData.GetMouseInput().GetJitteringCount() * 5 && InputAccess.MouseSensivityOptionEnabled() == false)
 		{
 			Debug.Log("Player had trouble using the mouse correctly. Unusual jittering in the mouse inputs was detected.");
 		}
