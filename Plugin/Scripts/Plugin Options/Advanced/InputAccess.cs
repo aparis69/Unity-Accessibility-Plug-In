@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public class InputAccess
 {
 	private static bool doubleStrikingOption = false;
-	private static bool mouseSensivityOption = false;
+	private static bool mouseSensivityOption = true;
+	private static float mouseSensivity = 1.0f;
 	private static Dictionary<KeyCode, float> map;
 	private static KeyCode[] keys = (KeyCode[])System.Enum.GetValues(typeof(KeyCode));
 
@@ -38,8 +39,8 @@ public class InputAccess
 
 	public static float GetAxis(string axisName)
 	{
-		if (mouseSensivityOption)
-			return Input.GetAxis(axisName) / 2f;
+		if (mouseSensivityOption && axisName.Contains("Mouse"))
+			return Input.GetAxis(axisName) * mouseSensivity;
 		else
 			return Input.GetAxis(axisName);
 	}
@@ -53,5 +54,15 @@ public class InputAccess
 	public static bool MouseSensivityOptionEnabled()
 	{
 		return mouseSensivityOption;
+	}
+
+	public static void SetDoubleStrikingOption(bool db)
+	{
+		doubleStrikingOption = db;
+	}
+
+	public static void SetMouseSensivity(float sensivity)
+	{
+		mouseSensivity = sensivity;
 	}
 }

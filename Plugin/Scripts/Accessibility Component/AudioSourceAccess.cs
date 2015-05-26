@@ -13,7 +13,6 @@ public class AudioSourceAccess : MonoBehaviour
 		subManager = FindObjectOfType<SubtitleManagement>();
 	}
 
-
 	// Interaction function
 	public void Play()
 	{
@@ -23,6 +22,7 @@ public class AudioSourceAccess : MonoBehaviour
 			subManager.AddSubtitle(source);
 		}
 	}
+
 	public void PlayAmbient()
 	{
 		source.Play();

@@ -75,7 +75,6 @@ public class FirstPersonController : MonoBehaviour
 		m_MouseLook.Init(transform, m_Camera.transform);
 	}
 
-
 	// Update is called once per frame
 	private void Update()
 	{
@@ -104,14 +103,12 @@ public class FirstPersonController : MonoBehaviour
 		}
 	}
 
-
 	private void PlayLandingSound()
 	{
 		m_AudioSourceAccess.source.clip = m_LandSound;
 		m_AudioSourceAccess.Play();
 		m_NextStep = m_StepCycle + .5f;
 	}
-
 
 	private void FixedUpdate()
 	{
@@ -152,13 +149,11 @@ public class FirstPersonController : MonoBehaviour
 		UpdateCameraPosition(speed);
 	}
 
-
 	private void PlayJumpSound()
 	{
 		m_AudioSourceAccess.source.clip = m_JumpSound;
 		m_AudioSourceAccess.Play();
 	}
-
 
 	private void ProgressStepCycle(float speed)
 	{
@@ -178,7 +173,6 @@ public class FirstPersonController : MonoBehaviour
 		PlayFootStepAudio();
 	}
 
-
 	private void PlayFootStepAudio()
 	{
 		if (!m_CharacterController.isGrounded)
@@ -194,7 +188,6 @@ public class FirstPersonController : MonoBehaviour
 		m_FootstepSounds[n] = m_FootstepSounds[0];
 		m_FootstepSounds[0] = m_AudioSourceAccess.source.clip;
 	}
-
 
 	private void UpdateCameraPosition(float speed)
 	{
@@ -219,12 +212,11 @@ public class FirstPersonController : MonoBehaviour
 		m_Camera.transform.localPosition = newCameraPosition;
 	}
 
-
 	private void GetInput(out float speed)
 	{
 		// Read input
-		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
-		float vertical = CrossPlatformInputManager.GetAxis("Vertical");
+		float horizontal = InputAccess.GetAxis("Horizontal");
+		float vertical = InputAccess.GetAxis("Vertical");
 
 		bool waswalking = m_IsWalking;
 
@@ -252,12 +244,10 @@ public class FirstPersonController : MonoBehaviour
 		}
 	}
 
-
 	private void RotateView()
 	{
 		m_MouseLook.LookRotation(transform, m_Camera.transform);
 	}
-
 
 	private void OnControllerColliderHit(ControllerColliderHit hit)
 	{
@@ -274,7 +264,6 @@ public class FirstPersonController : MonoBehaviour
 		}
 		body.AddForceAtPosition(m_CharacterController.velocity * 0.1f, hit.point, ForceMode.Impulse);
 	}
-
 
 	public void ActivateGame()
 	{
