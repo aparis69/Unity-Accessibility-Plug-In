@@ -45,6 +45,12 @@ public class InputAccess
 			return Input.GetAxis(axisName);
 	}
 
+	// Not implemented yet
+	public static void GetKeyCombinaison(string combinationName)
+	{
+
+	}
+
 	// Getter & Setter
 	public static bool DoubleStrikingOptionEnabled()
 	{
