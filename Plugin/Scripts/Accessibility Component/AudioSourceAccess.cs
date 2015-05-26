@@ -7,7 +7,7 @@ public class AudioSourceAccess : MonoBehaviour
 	public AudioSource source;
 	private SubtitleManagement subManager;
 
-	void Start ()
+	void Awake ()
 	{
 		source = this.GetComponent<AudioSource>();
 		subManager = FindObjectOfType<SubtitleManagement>();
