@@ -24,10 +24,7 @@ public class PluginMenuEventAdvanced : PluginMenuEvent
 		}
 	}
 
-	// Show the sound manager interface on the screen
-	public void ShowSoundManagerInterface()
-	{
-	}
+
 
 	public void MouseSensivityValueChanged()
 	{

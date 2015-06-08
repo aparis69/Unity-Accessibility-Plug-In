@@ -10,6 +10,9 @@ public class PluginMenuEvent : MonoBehaviour
 	// Variables Subtitle management
 	public SubtitleManagement subtitleManager;
 
+	// Variables Sound management
+	public SoundManager soundManager;
+
 	// Variable time management
 	public Slider timeSlider;
 
@@ -125,9 +128,15 @@ public class PluginMenuEvent : MonoBehaviour
 	}
 
 
-	// Sound Management Interface Option
+	// Subtitle Interface Option
 	public void ShowSubtitleManagementInterface()
 	{
 		subtitleManager.SwitchDisplay();
+	}
+
+	// Sound Management Interface Option
+	public void ShowSoundManagementInterface()
+	{
+		soundManager.SwitchDisplay();
 	}
 }
