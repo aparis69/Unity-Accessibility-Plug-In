@@ -159,5 +159,4 @@ public class SubtitleManagement : MonoBehaviour
 	{
 		return showingSubtitle;
 	}
-
 }

@@ -7,6 +7,7 @@ public class KeyboardTracker : MonoBehaviour
 	private KeyboardInput keyboardInput;
 
 	private bool analyseEnabled;
+	public bool inputAccess = false;
 
 	void Start () 
 	{
@@ -42,10 +43,10 @@ public class KeyboardTracker : MonoBehaviour
 		int e = validKeyCodes.Length;
 		for (int i = 0; i < e; i++)
 		{
-			if (Input.GetKeyDown((KeyCode)i))
-			{
+			if (!inputAccess && Input.GetKeyDown((KeyCode)i))
 				return (KeyCode)i;
-			}
+			else if (inputAccess && InputAccess.GetKeyDown((KeyCode)i))
+				return (KeyCode)i;
 		}
 
 		return KeyCode.None;

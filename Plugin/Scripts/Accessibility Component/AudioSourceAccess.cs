@@ -26,10 +26,10 @@ public class AudioSourceAccess : MonoBehaviour
 	public void PlayAmbient()
 	{
 		source.Play();
-		if (subManager.IsShowingSubtitle() == true)
-		{
-			subManager.AddAmbientSubtitle(source);
-		}
+		//if (subManager.IsShowingSubtitle() == true)
+		//{
+		//	subManager.AddAmbientSubtitle(source);
+		//}
 	}
 
 	public void PlayOneShot(AudioClip clip)
