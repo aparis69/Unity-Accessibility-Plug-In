@@ -7,7 +7,7 @@ public class AudioSourceAccess : MonoBehaviour
 	public AudioSource source;
 	private SubtitleManagement subManager;
 
-	void Start ()
+	void Awake ()
 	{
 		source = this.GetComponent<AudioSource>();
 		subManager = FindObjectOfType<SubtitleManagement>();
@@ -28,7 +28,7 @@ public class AudioSourceAccess : MonoBehaviour
 		source.Play();
 		//if (subManager.IsShowingSubtitle() == true)
 		//{
-		//	subManager.AddAmbientSubtitle(source);
+			subManager.AddAmbientSubtitle(source);
 		//}
 	}
 

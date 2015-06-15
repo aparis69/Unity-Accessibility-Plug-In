@@ -7,6 +7,8 @@ public class PluginMenuEventAdvanced : PluginMenuEvent
 	public Slider mouseSensivitySlider;
 	public Toggle doubleStrikingOption;
 
+	public SoundManager soundManager;
+
 	void Start()
 	{
 		Initialization();
@@ -27,6 +29,7 @@ public class PluginMenuEventAdvanced : PluginMenuEvent
 	// Show the sound manager interface on the screen
 	public void ShowSoundManagerInterface()
 	{
+		soundManager.SwitchDisplay();
 	}
 
 	public void MouseSensivityValueChanged()
