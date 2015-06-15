@@ -28,7 +28,7 @@ public class AudioSourceAccess : MonoBehaviour
 		source.Play();
 		//if (subManager.IsShowingSubtitle() == true)
 		//{
-		//	subManager.AddAmbientSubtitle(source);
+			subManager.AddAmbientSubtitle(source);
 		//}
 	}
 

@@ -7,7 +7,7 @@ public class InputAccess
 	private static bool doubleStrikingOption = false;
 	private static bool mouseSensivityOption = true;
 	private static float mouseSensivity = 1.0f;
-	private static Dictionary<KeyCode, float> map;
+	private static Dictionary<KeyCode, float> map = new Dictionary<KeyCode,float>();
 	private static KeyCode[] keys = (KeyCode[])System.Enum.GetValues(typeof(KeyCode));
 
 	public static bool GetKeyDown(KeyCode key)
@@ -17,7 +17,7 @@ public class InputAccess
 			if (map.ContainsKey(key))
 			{
 				float timing = map[key];
-				if (Time.realtimeSinceStartup - timing > 0.5f)
+				if (Time.realtimeSinceStartup - timing > 0.8f)
 					return false;
 				else
 				{

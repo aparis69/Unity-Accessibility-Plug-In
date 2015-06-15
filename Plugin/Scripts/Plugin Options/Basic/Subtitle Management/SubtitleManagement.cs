@@ -73,7 +73,7 @@ public class SubtitleManagement : MonoBehaviour
 
 	public void AddAmbientSubtitle(AudioSource source)
 	{
-		ambientSubList.Add("(Ambient) " + source.clip.name + " sound");
+		ambientSubList.Add("(Ambient) " + source.clip.name + " sound" + "\n");
 
 		UpdateText();
 
