@@ -71,8 +71,9 @@ public class CBFixGUI : MonoBehaviour
         if(_TList == null)
         {
             _TList = new List<Text>();
-            foreach (Button B in _BList)
-                _TList.AddRange(B.GetComponentsInChildren<Text>(true));
+            //foreach (Button B in _BList)
+               // _TList.AddRange(B.GetComponentsInChildren<Text>(true)); //uncomment if there's a problem with buttons
+            _TList.AddRange((Text[])FindObjectsOfType(typeof(Text)));
         }
             
         if(firstRun == false)
