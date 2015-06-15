@@ -207,13 +207,11 @@ public class CBFixGUI : MonoBehaviour
                 else if ((_originalcolour.r >= 225 / 255f && _originalcolour.b <= 1.0f) && (_originalcolour.b >= 1 / 255f && _originalcolour.b <= 25 / 255f) && (_originalcolour.g >= 225 / 255f && _originalcolour.g <= 1.0f))
                 {
                     _newcolour = new Color(125 / 255f, 125 / 255f, 125 / 255f, _originalcolour.a);
-
                     T.color = _newcolour;
                 }
-                else
-                {
-                    break;
-                }
+                else                
+                    T.color = _originalcolour;
+                
                 break;
             case ColorBlindnessType.Deuteranopia:
                 _OriginalTextColours.TryGetValue(T, out _originalcolour);
@@ -222,6 +220,9 @@ public class CBFixGUI : MonoBehaviour
                     _newcolour = new Color(0.004f, 0.427f, 1.0f, _originalcolour.a);
                     T.color = _newcolour;
                 }
+                else
+                    T.color = _originalcolour;
+
                 break;
             case ColorBlindnessType.Tritanopia:
                 _OriginalTextColours.TryGetValue(T, out _originalcolour);
@@ -230,6 +231,9 @@ public class CBFixGUI : MonoBehaviour
                     _newcolour = new Color(221 / 255f, 237 / 255f, 239 / 255f, _originalcolour.a);
                     T.color = _newcolour;
                 }
+                else
+                    T.color = _originalcolour;
+
                 break;
         }
     }
