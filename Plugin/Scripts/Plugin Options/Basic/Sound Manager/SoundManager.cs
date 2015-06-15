@@ -29,8 +29,10 @@ public class SoundManager : MonoBehaviour {
 		List<List<AudioSource>> clipsList = new List<List<AudioSource>>();
 		for (int i = 0; i < audioSources.Length; i++)
 		{
-			if (audioSources[i].clip == null)
+			if (audioSources[i].clip == null) 
+			{
 				continue;
+			}
 
 			if (audioSourcesName.Contains(audioSources[i].clip.name))
 			{
@@ -57,11 +59,12 @@ public class SoundManager : MonoBehaviour {
 			RectTransform rect = obj.GetComponent<RectTransform>();
 			Vector2 vect = new Vector2(0.0f, offset);
 			rect.anchoredPosition = vect;
-			
+
 			SoundItem soundItem = obj.GetComponent<SoundItem>();
 			soundItem.audioSources = clipsList[i].ToArray();
 			soundItem.initDisplay();
 			soundItems[i] = soundItem;
+			soundItems[i].transform.localScale = new Vector3(1f, 1f, 1f);
 		}
 	}
 
@@ -73,10 +76,12 @@ public class SoundManager : MonoBehaviour {
 		{
 			HideInterface();
 		}
+
 		else 
 		{
 			ShowInterface();
-		}	
+		}
+			
 	}
 
 
@@ -89,7 +94,9 @@ public class SoundManager : MonoBehaviour {
 	private void HideInterface()
 	{
 		for (int i = 0; i < soundItems.Length; i++)
+		{
 			Destroy(soundItems[i].gameObject);
+		}
 		audioSources = null;
 		soundItems = null;
 		showingSoundList = false;

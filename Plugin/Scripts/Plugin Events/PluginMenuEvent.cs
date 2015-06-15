@@ -10,6 +10,9 @@ public class PluginMenuEvent : MonoBehaviour
 	// Variables Subtitle management
 	public SubtitleManagement subtitleManager;
 
+	// Variables Sound management
+	public SoundManager soundManager;
+
 	// Variable time management
 	public Slider timeSlider;
 
@@ -21,12 +24,17 @@ public class PluginMenuEvent : MonoBehaviour
 
 	// Variables menu activated/desactivated
 	protected bool menuEnabled;
-	protected bool flagMenuActivate;
 
 	// Variables High contrast mode
 	public Material contrastIntensityMaterial;
 	public Slider contrastSlider;
 	protected bool highContrastEnabled;
+
+	// Variables Edge Detection mode
+	public Material edgeDetectionMaterial;
+	public Slider edgeWidthSlider;
+	public Slider edgeBgAmountSlider;
+	protected bool edgeDetectionEnabled;
 
 	void Start()
 	{
@@ -36,8 +44,8 @@ public class PluginMenuEvent : MonoBehaviour
 	protected void Initialization()
 	{
 		menuEnabled = false;
-		flagMenuActivate = false;
 		highContrastEnabled = false;
+		edgeDetectionEnabled = false;
 
 		for (int i = 0; i < menuButtons.Length; i++)
 			menuButtons[i].SetActive(false);
@@ -47,14 +55,7 @@ public class PluginMenuEvent : MonoBehaviour
 
 	void Update()
 	{
-		if (menuEnabled && !flagMenuActivate)
-		{
-			flagMenuActivate = true;
 
-			// Show the options of the menu
-			for (int i = 0; i < menuButtons.Length; i++)
-				menuButtons[i].SetActive(true);
-		}
 	}
 
 
@@ -64,15 +65,30 @@ public class PluginMenuEvent : MonoBehaviour
 		if (menuEnabled)
 		{
 			menuEnabled = false;
-			flagMenuActivate = false;
 
 			// Desactivate the options of the menu
 			for (int i = 0; i < menuButtons.Length; i++)
 				menuButtons[i].SetActive(false);
+
+			edgeBgAmountSlider.gameObject.SetActive(false);
+			edgeWidthSlider.gameObject.SetActive(false);
+			contrastSlider.gameObject.SetActive(false);
 		}
 		else
 		{
 			menuEnabled = true;
+
+			// Show the options of the menu
+			for (int i = 0; i < menuButtons.Length; i++)
+				menuButtons[i].SetActive(true);
+
+			if (edgeDetectionEnabled == true)
+			{
+				edgeBgAmountSlider.gameObject.SetActive(true);
+				edgeWidthSlider.gameObject.SetActive(true);
+			}
+			if (highContrastEnabled == true)
+				contrastSlider.gameObject.SetActive(true);
 		}
 	}
 
@@ -87,6 +103,7 @@ public class PluginMenuEvent : MonoBehaviour
 				for (int i = 0; i < cameras.Length; i++)
 					GameObject.Destroy(cameras[i].gameObject.GetComponent<ContrastIntensity>());
 				highContrastEnabled = false;
+				contrastSlider.gameObject.SetActive(false);
 			}
 			else
 			{
@@ -96,6 +113,7 @@ public class PluginMenuEvent : MonoBehaviour
 					cameras[i].gameObject.GetComponent<ContrastIntensity>().SetMaterial(contrastIntensityMaterial);
 				}
 				highContrastEnabled = true;
+				contrastSlider.gameObject.SetActive(true);
 			}
 		}
 	}
@@ -108,6 +126,51 @@ public class PluginMenuEvent : MonoBehaviour
 				cameras[i].gameObject.GetComponent<ContrastIntensity>().SetIntensity(contrastSlider.value);
 		}
 	}
+
+
+	public void ActiveEdgeDetectionMode()
+	{
+		if (menuEnabled)
+		{
+			if (edgeDetectionEnabled)
+			{
+				for (int i = 0; i < cameras.Length; i++)
+					GameObject.Destroy(cameras[i].gameObject.GetComponent<EdgeDetectionEffect>());
+				edgeDetectionEnabled = false;
+				edgeWidthSlider.gameObject.SetActive(false);
+				edgeBgAmountSlider.gameObject.SetActive(false);
+			}
+			else
+			{
+				for (int i = 0; i < cameras.Length; i++)
+				{
+					cameras[i].gameObject.AddComponent<EdgeDetectionEffect>();
+					cameras[i].gameObject.GetComponent<EdgeDetectionEffect>().SetMaterial(edgeDetectionMaterial);
+				}
+				edgeDetectionEnabled = true;
+				edgeWidthSlider.gameObject.SetActive(true);
+				edgeBgAmountSlider.gameObject.SetActive(true);
+			}
+		}
+	}
+
+	public void EdgeWidthChanged()
+	{
+		if (menuEnabled && edgeDetectionEnabled)
+		{
+			for (int i = 0; i < cameras.Length; i++)
+				cameras[i].gameObject.GetComponent<EdgeDetectionEffect>().SetEdgeWidth(edgeWidthSlider.value);
+		}
+	}
+	public void EdgeBgAmountChanged()
+	{
+		if (menuEnabled && edgeDetectionEnabled)
+		{
+			for (int i = 0; i < cameras.Length; i++)
+				cameras[i].gameObject.GetComponent<EdgeDetectionEffect>().SetBgAmount(edgeBgAmountSlider.value);
+		}
+	}
+	
 
 
 	// Color blind Option
@@ -125,9 +188,15 @@ public class PluginMenuEvent : MonoBehaviour
 	}
 
 
-	// Sound Management Interface Option
+	// Subtitle Interface Option
 	public void ShowSubtitleManagementInterface()
 	{
 		subtitleManager.SwitchDisplay();
+	}
+
+	// Sound Management Interface Option
+	public void ShowSoundManagementInterface()
+	{
+		soundManager.SwitchDisplay();
 	}
 }

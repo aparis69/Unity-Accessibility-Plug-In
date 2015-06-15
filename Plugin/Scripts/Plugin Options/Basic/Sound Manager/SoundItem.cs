@@ -24,7 +24,6 @@ public class SoundItem : MonoBehaviour
 		label = this.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>();
 		slider = this.GetComponent<UnityEngine.UI.Slider>();
 
-		
 		label.text = audioSources[0].clip.name + " sounds";
 
 		slider.value = 1.0f;
