@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Handle all the player life points: decrease when touching fires (with Triggers), and respawn to starting point.
+/// Also calculate the number of time the player died.
+/// </summary>
 public class PlayerLifePoint : MonoBehaviour
 {
 	private Vector3 startingPosition;

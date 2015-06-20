@@ -4,6 +4,9 @@ using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// Unity standard asset first person controller prefab.
+/// </summary>
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(AudioSourceAccess))]
 public class FirstPersonController : MonoBehaviour

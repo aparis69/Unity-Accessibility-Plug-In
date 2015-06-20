@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Attached to the AI prefab, can be activated (try to reach safe zone) and desactivated
+/// </summary>
 public class AIController : MonoBehaviour 
 {
     public GameObject goal;

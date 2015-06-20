@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Attached the the player game object in Unity. Allows him to grab some "Scared AI" prefab, to increase the number of people saved from the fire.
+/// </summary>
 public class GrabPeople : MonoBehaviour 
 {
 	private bool grabModeEnabled;

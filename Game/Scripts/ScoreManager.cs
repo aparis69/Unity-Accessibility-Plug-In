@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Class to handle potential future score, not implemented yet.
+/// </summary>
 public class ScoreManager : MonoBehaviour 
 {
 	private int score;

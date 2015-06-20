@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 using System.Collections;
 
+/// <summary>
+///  Deals with the interface events in the game: the starting text on the screen, and the player life point.
+/// </summary>
 public class UIEvents : MonoBehaviour 
 {
 	public Text lifePoint;

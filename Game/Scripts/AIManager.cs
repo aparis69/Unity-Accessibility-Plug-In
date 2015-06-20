@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// References all the AI and scared AI in the scene.
+/// </summary>
 public class AIManager : MonoBehaviour 
 {
 	private GameObject[] AI;

@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Basically an override of the Unity Input class. Can be use the same way, but with a double striking option and mouse sensitivity.
+/// </summary>
 public class InputAccess
 {
 	private static bool doubleStrikingOption = false;
@@ -10,6 +13,7 @@ public class InputAccess
 	private static Dictionary<KeyCode, float> map = new Dictionary<KeyCode,float>();
 	private static KeyCode[] keys = (KeyCode[])System.Enum.GetValues(typeof(KeyCode));
 
+	// Unity Basic function
 	public static bool GetKeyDown(KeyCode key)
 	{
 		if (doubleStrikingOption)

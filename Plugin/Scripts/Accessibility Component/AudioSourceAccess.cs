@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Override of the Unity AudioSource component, allows the player to use subtitles and sound management
+/// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class AudioSourceAccess : MonoBehaviour 
 {

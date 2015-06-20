@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Game Manager, triggers the events of the beginning of the game like the calm phase, and then the alarm sound and fire...
+/// </summary>
 public class GameManager : MonoBehaviour
 {
 	public AIManager aiManager;

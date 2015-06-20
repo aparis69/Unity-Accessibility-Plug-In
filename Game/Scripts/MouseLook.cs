@@ -2,6 +2,9 @@ using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
+/// <summary>
+/// Unity class, very basic MouseLook script for first person view game.
+/// </summary>
 [Serializable]
 public class MouseLook
 {
@@ -16,13 +19,11 @@ public class MouseLook
 	private Quaternion m_CharacterTargetRot;
 	private Quaternion m_CameraTargetRot;
 
-
 	public void Init(Transform character, Transform camera)
 	{
 		m_CharacterTargetRot = character.localRotation;
 		m_CameraTargetRot = camera.localRotation;
 	}
-
 
 	public void LookRotation(Transform character, Transform camera)
 	{
@@ -49,7 +50,6 @@ public class MouseLook
 		}
 	}
 
-
 	Quaternion ClampRotationAroundXAxis(Quaternion q)
 	{
 		q.x /= q.w;
@@ -65,6 +65,5 @@ public class MouseLook
 
 		return q;
 	}
-
 }
 

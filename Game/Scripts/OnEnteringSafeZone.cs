@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Represents the final goal of the game, the end. Check if the player has reached the safe zone with a trigger, and then stop the game.
+/// </summary>
 public class OnEnteringSafeZone : MonoBehaviour 
 {
 	private ScoreManager scoreManager;
