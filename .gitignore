@@ -1,4 +1,10 @@
-*.dll
-UnityVS.meta
-UnityVS/
-
+Library/
+Data/
+obj/
+Documents/*
+Temp/
+Builds/
+Tests/
+*.csproj
+*.sln
+.vs/
