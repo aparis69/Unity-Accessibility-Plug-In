@@ -7,11 +7,11 @@ using System.Collections;
 public class AIController : MonoBehaviour 
 {
     public GameObject goal;
-    private NavMeshAgent navMesh;
+    private UnityEngine.AI.NavMeshAgent navMesh;
 
 	void Start () 
     {
-        navMesh = this.GetComponent<NavMeshAgent>();
+        navMesh = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
 	}
 	
 	void Update () 
